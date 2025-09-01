@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Curso de Formação MAPEAR</title>
+  <meta name="description" content="Curso de Formação MAPEAR: Fundamentos de Pensamento Computacional, ferramentas digitais e atividades desplugadas, planejamento com mediação ativa e Reflexão Estruturada (RE), avaliação de competências e compartilhamento de práticas." />
+  <style>
+    :root {
+      --bg: #0b1020;
+      --panel: #121936;
+      --muted: #aab3d1;
+      --text: #eaf0ff;
+      --brand: #7c9cff;
+      --brand-2: #22c55e;
+      --accent: #f59e0b;
+      --danger: #ef4444;
+      --radius-xl: 18px;
+      --radius-lg: 14px;
+      --radius-md: 10px;
+      --shadow-1: 0 10px 30px rgba(0,0,0,.25);
+      --shadow-2: 0 12px 50px rgba(124,156,255,.2);
+      --code-bg: #0f1530;
+    }
+    * { box-sizing: border-box }
+    html, body { height: 100% }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica Neue, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      background: radial-gradient(1200px 800px at 70% -10%, rgba(124,156,255,.2), transparent 60%),
+                  radial-gradient(800px 600px at 10% 110%, rgba(34,197,94,.12), transparent 60%),
+                  var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+    }
+    a { color: var(--brand); text-decoration: none }
+    a:hover { text-decoration: underline }
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 28px }
+    header.hero {
+      border-radius: var(--radius-xl);
+      background: linear-gradient(135deg, rgba(124,156,255,.14), rgba(34,197,94,.10));
+      padding: 36px;
+      box-shadow: var(--shadow-2);
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+    }
+    .badge { display: inline-block; padding: 6px 12px; border-radius: 999px; background: rgba(124,156,255,.18); color: #dbe5ff; font-weight: 600; letter-spacing: .3px }
+    h1 { font-size: clamp(28px, 4vw, 44px); margin: 10px 0 8px }
+    .sub { color: var(--muted); max-width: 70ch }
+    .cta-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 18px }
+    .btn {
+      border: 0; cursor: pointer; padding: 12px 16px; border-radius: 12px;
+      font-weight: 700; letter-spacing: .2px; color: #0b1225;
+      background: linear-gradient(180deg, #c8d6ff, #95adff);
+      box-shadow: 0 8px 20px rgba(124,156,255,.35);
+    }
+    .btn.secondary { background: linear-gradient(180deg, #baf1cc, #7fe39f); box-shadow: 0 8px 20px rgba(34,197,94,.35) }
+    .btn.ghost { background: transparent; color: var(--text); border: 1px solid rgba(255,255,255,.12) }
+    .grid { display: grid; gap: 16px }
+    .grid.cols-3 { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)) }
+    .card {
+      background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.00));
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: var(--radius-lg);
+      padding: 18px;
+      box-shadow: var(--shadow-1);
+    }
+    h2 { font-size: clamp(20px, 2.6vw, 30px); margin: 0 0 8px }
+    h3 { margin: 0 0 8px }
+    .muted { color: var(--muted) }
+    .kpi { display:flex; align-items:center; gap:12px; padding: 10px 12px; border:1px dashed rgba(255,255,255,.12); border-radius: 12px }
+    .kpi strong { font-size: 18px }
+    .pill { padding: 4px 10px; border-radius: 999px; border:1px solid rgba(255,255,255,.1); background: rgba(255,255,255,.04); font-size: 12px }
+    /* Accordion */
+    details { border: 1px solid rgba(255,255,255,.1); border-radius: 14px; padding: 12px 14px; background: rgba(255,255,255,.02) }
+    details + details { margin-top: 10px }
+    summary { cursor: pointer; font-weight: 700; list-style: none }
+    summary::-webkit-details-marker { display: none }
+    .unit { display:grid; gap:10px; grid-template-columns: 1fr; }
+    .unit dl { margin: 0; display:grid; grid-template-columns: 140px 1fr; gap: 8px; align-items: start }
+    .unit dt { color: var(--muted) }
+    .unit dd { margin: 0 }
+    .stack { display: grid; gap: 10px }
+    .two { display:grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)) }
+    .two > * { min-width: 0 }
+    .notice { padding: 12px 14px; border-left: 4px solid var(--brand); background: rgba(124,156,255,.08); border-radius: 10px }
+    .rubric { width: 100%; border-collapse: collapse; overflow: hidden; border-radius: 12px }
+    .rubric th, .rubric td { border: 1px solid rgba(255,255,255,.08); padding: 10px; vertical-align: top }
+    .rubric thead th { background: rgba(255,255,255,.06) }
+    .table-wrap { overflow: auto; border-radius: 12px }
+    .rubric { min-width: 720px }
+    .footer { color: var(--muted); font-size: 14px; text-align: center; padding: 24px 12px }
+    .nav {
+      position: sticky; top: 12px; background: rgba(12,18,40,.7); backdrop-filter: blur(6px);
+      border:1px solid rgba(255,255,255,.08); border-radius: 14px; padding: 12px; box-shadow: var(--shadow-1)
+    }
+    .nav a { display:block; padding: 8px 10px; border-radius: 10px }
+    .nav a:hover { background: rgba(255,255,255,.06) }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 1, 1); white-space: nowrap; border: 0 }
+    .divider { height: 1px; background: linear-gradient(90deg, rgba(255,255,255,.04), rgba(255,255,255,.12) 40%, rgba(255,255,255,.04)); margin: 24px 0 }
+    @media print {
+      body { background: #fff; color: #000 }
+      header.hero { box-shadow: none; background: #f4f6ff; -webkit-print-color-adjust:exact; print-color-adjust: exact }
+      .nav { display:none }
+      a { color: #000 }
+      .btn { display:none }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="hero" id="topo" aria-labelledby="titulo">
+      <span class="badge">Formação Docente • MAPEAR</span>
+      <h1 id="titulo">Curso de Formação MAPEAR</h1>
+      <p class="sub">Presencial, híbrido ou EAD. Um percurso formativo para implementar o <strong>Pensamento Computacional (PC)</strong> na Educação Básica com mediação ativa e <strong>Reflexão Estruturada (RE)</strong>, combinando ferramentas digitais e atividades desplugadas, avaliação por competências e um banco colaborativo de práticas.</p>
+      <div class="cta-row" role="group" aria-label="Ações">
+        <button class="btn" onclick="window.print()">Imprimir/Salvar em PDF</button>
+        <a class="btn ghost" href="#programa">Ver programa</a>
+      </div>
+    </header>
+
+    <div class="divider"></div>
+
+    <section class="grid" aria-label="Visão geral">
+      <div class="grid cols-3">
+        <div class="card kpi"><strong>Carga horária</strong><span class="pill">30h • sugerido</span></div>
+        <div class="card kpi"><strong>Público-alvo</strong><span class="pill">Professores em Formação Inicial ou Continuada</span></div>
+        <div class="card kpi"><strong>Modalidades</strong><span class="pill">Presencial • Híbrido • EAD</span></div>
+      </div>
+      <div class="two">
+        <div class="card">
+          <h2>Objetivos</h2>
+          <ul>
+            <li>Compreender fundamentos do PC e seus pilares (decomposição, padrões, abstração, algoritmos).</li>
+            <li>Planejar sequências e projetos com <em>mediação ativa</em> e momentos de <strong>RE</strong>.</li>
+            <li>Selecionar ferramentas digitais e propor atividades desplugadas alinhadas à BNCC.</li>
+            <li>Desenhar estratégias e instrumentos de avaliação por competências.</li>
+            <li>Construir e compartilhar um banco aberto de práticas MAPEAR.</li>
+          </ul>
+        </div>
+        <nav class="nav" aria-label="Navegação rápida">
+          <strong style="display:block;margin-bottom:6px">Navegue</strong>
+          <a href="#programa">Programa</a>
+          <a href="#mod1">Módulo 1: Fundamentos do PC</a>
+          <a href="#mod2">Módulo 2: Ferramentas & Desplugadas</a>
+          <a href="#mod3">Módulo 3: Planejamento + Robótica</a>
+          <a href="#mod4">Módulo 4: Avaliação</a>
+          <a href="#mod5">Módulo 5: Banco de Práticas</a>
+          <a href="#cronograma">Cronograma sugerido</a>
+          <a href="#faq">FAQ</a>
+        </nav>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <section id="programa" aria-labelledby="programa-t">
+      <h2 id="programa-t">Programa detalhado</h2>
+      <p class="muted">Cada módulo inclui objetivos de aprendizagem, conteúdos, atividades (presencial/EAD), RE (Reflexão Estruturada), avaliação formativa e recursos.</p>
+
+      <!-- Módulo 1 -->
+      <article id="mod1" class="stack">
+        <h3>✦ Módulo 1 — Fundamentos do PC na Educação Básica (6h)</h3>
+        <details open>
+          <summary>Unidade 1.1 • PC e BNCC: por que e para quê (2h)</summary>
+          <div class="unit">
+            <dl>
+              <dt>Objetivos</dt><dd>Relacionar PC à BNCC e a práticas interdisciplinares; diferenciar PC de programação.</dd>
+              <dt>Conteúdos</dt><dd>Conceitos; pilares do PC; transposição didática; exemplos em Línguas, Matemática, Ciências e Artes.</dd>
+              <dt>Atividades</dt><dd>
+                <ul>
+                  <li><strong>Presencial/EAD:</strong> Mapa mental colaborativo (Jamboard/Quadro) sobre usos do PC.</li>
+                  <li><strong>Desplugada:</strong> Classificação de problemas por decomposição com cartões.</li>
+                </ul>
+              </dd>
+              <dt>RE</dt><dd>Diário rápido: "Que evidências de PC já existem na minha prática?"</dd>
+              <dt>Avaliação</dt><dd>Checklist de compreensão + participação no mapa mental.</dd>
+              <dt>Recursos</dt><dd>Quadro físico/virtual, cartões, projetor, rubrica rápida.</dd>
+            </dl>
+          </div>
+        </details>
+        <details>
+          <summary>Unidade 1.2 • Pilares: decomposição, padrões, abstração, algoritmos (2h)</summary>
+          <div class="unit">
+            <dl>
+              <dt>Objetivos</dt><dd>Aplicar os quatro pilares em situações do cotidiano escolar.</dd>
+              <dt>Atividades</dt><dd>
+                <ul>
+                  <li><strong>Desplugada:</strong> Algoritmo de sanduíche (instruções ambíguas vs. precisas).</li>
+                  <li><strong>Digital:</strong> Fluxogramas simples (draw.io) para rotinas escolares.</li>
+                </ul>
+              </dd>
+              <dt>RE</dt><dd>Reflexão guiada: onde a precisão faz diferença no meu componente curricular?</dd>
+              <dt>Avaliação</dt><dd>Rubrica de uso dos pilares (iniciante → proficiente).</dd>
+            </dl>
+          </div>
+        </details>
+        <details>
+          <summary>Unidade 1.3 • Equidade e acessibilidade no PC (2h)</summary>
+          <div class="unit">
+            <dl>
+              <dt>Objetivos</dt><dd>Planejar experiências acessíveis e inclusivas.</dd>
+              <dt>Atividades</dt><dd>Checklist de acessibilidade; adaptação de atividade para baixa visão e TDAH.</dd>
+              <dt>RE</dt><dd>Matriz 2×2: impacto x esforço de adaptações.</dd>
+              <dt>Avaliação</dt><dd>Plano de ação individual com metas SMART.</dd>
+            </dl>
+          </div>
+        </details>
+        <div class="cta-row">
+          <a class="btn secondary" href="./Modulo_1.pdf" target="_blank" rel="noopener">Abrir módulo 1</a>
+        </div>
+      </article>
+
+      <!-- Módulo 2 -->
+      <article id="mod2" class="stack">
+        <h3>✦ Módulo 2 — Ferramentas Digitais e Atividades Desplugadas (8h)</h3>
+        <details open>
+          <summary>Unidade 2.1 • Ecossistema de ferramentas (2h)</summary>
+          <div class="unit">
+            <dl>
+              <dt>Objetivos</dt><dd>Selecionar ferramentas alinhadas a objetivos e infraestrutura da escola.</dd>
+              <dt>Conteúdos</dt><dd>Blocos (Scratch), texto (Python introdutório), microcontroladores (Micro:bit), planilhas, simuladores, IA generativa com uso responsável.</dd>
+              <dt>Atividades</dt><dd>Roteiro de curadoria: critérios, alternativas offline/baixa banda.</dd>
+              <dt>RE</dt><dd>Canvas de decisão (custo, acessibilidade, curva de aprendizagem).</dd>
+            </dl>
+          </div>
+        </details>
+        <details>
+          <summary>Unidade 2.2 • Atividades desplugadas de PC (3h)</summary>
+          <div class="unit">
+            <dl>
+              <dt>Objetivos</dt><dd>Conduzir dinâmicas desplugadas para desenvolver raciocínio algorítmico.</dd>
+              <dt>Atividades</dt><dd>Percurso em grade, cartas "Se/Então", debug humano, sorting network com cordas.</dd>
+              <dt>RE</dt><dd>Roda de conversa sobre transferência para leitura, escrita e matemática.</dd>
+            </dl>
+          </div>
+        </details>
+        <details>
+          <summary>Unidade 2.3 • Trilhas digitais guiadas (3h)</summary>
+          <div class="unit">
+            <dl>
+              <dt>Objetivos</dt><dd>Experimentar sequências curtas em Scratch/planilhas/Micro:bit.</dd>
+              <dt>Atividades</dt><dd>Mini-desafios por níveis; pares programadores; "stop & share".</dd>
+              <dt>RE</dt><dd>Reflexão estruturada: o que manter, adaptar, eliminar.</dd>
+            </dl>
+          </div>
+        </details>
+        <div class="cta-row">
+          <a class="btn secondary" href="./Modulo_2.pdf" target="_blank" rel="noopener">Abrir módulo 2</a>
+        </div>
+      </article>
+
+      <!-- Módulo 3 -->
+      <article id="mod3" class="stack">
+        <h3>✦ Módulo 3 — Planejamento de Projetos com Mediação Ativa e RE (8h)</h3>
+        <details open>
+          <summary>Unidade 3.1 • MAPEAR um projeto (2h)</summary>
+          <div class="unit">
+            <dl>
+              <dt>Objetivos</dt><dd>Aplicar a metodologia MAPEAR para desenhar projetos interdisciplinares.</dd>
+              <dt>Conteúdos</dt><dd>Problema-motriz; perguntas orientadoras; critérios de sucesso; produto público.</dd>
+              <dt>Atividades</dt><dd>Canvas do projeto; definição de evidências de aprendizagem por competência.</dd>
+            </dl>
+          </div>
+        </details>
+        <details>
+          <summary>Unidade 3.2 • Mediação ativa e protocolos de sala (3h)</summary>
+          <div class="unit">
+            <dl>
+              <dt>Objetivos</dt><dd>Conduzir protocolos: pense-compartilhe, galerias, crítica amigável, check-ins.</dd>
+              <dt>Atividades</dt><dd>Simulações de facilitação; plano de mediação por etapa.</dd>
+              <dt>RE</dt><dd>Após cada simulação, registrar "o que observei, o que faria diferente".</dd>
+            </dl>
+          </div>
+        </details>
+        <details>
+          <summary>Unidade 3.3 • RE — Reflexão Estruturada (3h)</summary>
+          <div class="unit">
+            <dl>
+              <dt>Objetivos</dt><dd>Estruturar momentos de metacognição antes, durante e após projetos.</dd>
+              <dt>Atividades</dt><dd>Protocolos RE: diário de bordo, retro 4Qs (Continuar/Parar/Começar/Mudar), pós-mortem leve.</dd>
+              <dt>Produtos</dt><dd>Roteiros de perguntas e instrumentos para uso com estudantes.</dd>
+            </dl>
+          </div>
+        </details>
+        <div class="cta-row">
+          <a class="btn secondary" href="./Modulo_3.pdf" target="_blank" rel="noopener">Abrir módulo 3</a>
+        </div>
+      </article>
+
+      <!-- Módulo 4 -->
+      <article id="mod4" class="stack">
+        <h3>✦ Módulo 4 — Estratégias de Avaliação de Competências Computacionais (6h)</h3>
+        <details open>
+          <summary>Unidade 4.1 • Matriz de competências e progressão (2h)</summary>
+          <div class="unit">
+            <dl>
+              <dt>Objetivos</dt><dd>Construir uma matriz por níveis (iniciante, básico, intermediário, proficiente).</dd>
+              <dt>Atividades</dt><dd>Mapeamento de evidências por pilar do PC; alinhamento a objetivos.</dd>
+            </dl>
+          </div>
+        </details>
+        <details>
+          <summary>Unidade 4.2 • Instrumentos e rubricas (2h)</summary>
+          <div class="unit">
+            <dl>
+              <dt>Objetivos</dt><dd>Elaborar rubricas claras e tarefas autênticas.</dd>
+              <dt>Atividades</dt><dd>Construção de rubrica; validação por pares; critérios de acessibilidade.</dd>
+            </dl>
+          </div>
+        </details>
+        <details>
+          <summary>Unidade 4.3 • Feedback e autoavaliação (2h)</summary>
+          <div class="unit">
+            <dl>
+              <dt>Objetivos</dt><dd>Implementar ciclos de feedback formativo e autoavaliação.</dd>
+              <dt>Atividades</dt><dd>Quadro de feedback "Eu observei / Sugiro / Pergunto"; checklists de qualidade.</dd>
+            </dl>
+          </div>
+        </details>
+        <div class="cta-row">
+          <a class="btn secondary" href="./Modulo_4.pdf" target="_blank" rel="noopener">Abrir módulo 4</a>
+        </div>
+      </article>
+
+      <!-- Módulo 5 -->
+      <article id="mod5" class="stack">
+        <h3>✦ Módulo 5 — Compartilhamento de experiências e banco de práticas (2h)</h3>
+        <details open>
+          <summary>Unidade 5.1 • Showcase e Banco de Práticas (2h)</summary>
+          <div class="unit">
+            <dl>
+              <dt>Objetivos</dt><dd>Documentar, publicar e licenciar práticas no repositório MAPEAR.</dd>
+              <dt>Atividades</dt><dd>PechaKucha/galeria; ficha-padrão (contexto, objetivos, passo a passo, RE, avaliação, anexos).</dd>
+              <dt>Produtos</dt><dd>Prática publicada + plano de replicação em outra turma/área.</dd>
+            </dl>
+          </div>
+        </details>
+        <div class="cta-row">
+          <a class="btn secondary" href="./Modulo_5.pdf" target="_blank" rel="noopener">Abrir módulo 5</a>
+        </div>
+      </article>
+    </section>
+
+    <div class="divider"></div>
+
+    <section id="avaliacao" aria-labelledby="av-t">
+      <h2 id="av-t">Matriz de competências (exemplo) e rubrica</h2>
+      <div class="notice">Use e adapte conforme seu contexto. Inclui critérios transversais: colaboração, comunicação, ética digital e acessibilidade.</div>
+      <div class="two">
+        <div class="card">
+          <div class="table-wrap">
+            <table class="rubric" aria-label="Matriz de competências de PC">
+            <thead>
+              <tr><th>Competência</th><th>Iniciante</th><th>Básico</th><th>Intermediário</th><th>Proficiente</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Decomposição</td>
+                <td>Reconhece tarefas grandes.</td>
+                <td>Separa em 2–3 partes simples.</td>
+                <td>Estrutura etapas com dependências.</td>
+                <td>Refatora e otimiza o plano.</td>
+              </tr>
+              <tr>
+                <td>Padrões</td>
+                <td>Identifica semelhanças simples.</td>
+                <td>Classifica exemplos recorrentes.</td>
+                <td>Generaliza para novas situações.</td>
+                <td>Cria modelos reutilizáveis.</td>
+              </tr>
+              <tr>
+                <td>Abstração</td>
+                <td>Diferencia dados essenciais e supérfluos.</td>
+                <td>Cria representações básicas (tabela/diagrama).</td>
+                <td>Escolhe abstrações adequadas ao público.</td>
+                <td>Transita entre níveis de abstração.</td>
+              </tr>
+              <tr>
+                <td>Algoritmos</td>
+                <td>Segue sequências simples.</td>
+                <td>Escreve instruções claras.</td>
+                <td>Usa estruturas condicionais/repetição.</td>
+                <td>Refina com testes e depuração.</td>
+              </tr>
+            </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Rubrica para projetos MAPEAR (resumo)</h3>
+          <ul>
+            <li><strong>Clareza do problema-motriz</strong>: relevante, contextualizado, interdisciplinar.</li>
+            <li><strong>Evidências de PC</strong>: presença explícita dos quatro pilares.</li>
+            <li><strong>Acessibilidade</strong>: adaptações planejadas; linguagem inclusiva.</li>
+            <li><strong>Mediação ativa</strong>: protocolos e check-ins definidos.</li>
+            <li><strong>RE</strong>: momentos de metacognição antes/durante/depois.</li>
+            <li><strong>Produto público</strong>: utilidade, clareza e documentação.</li>
+            <li><strong>Feedback</strong>: ciclos e critérios transparentes.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <section id="cronograma" aria-labelledby="crono-t">
+      <h2 id="crono-t">Cronograma sugerido (30h)</h2>
+      <div class="card">
+        <ol>
+          <li><strong>Encontro 1 (4h):</strong> Módulo 1.1 e 1.2</li>
+          <li><strong>Encontro 2 (2h):</strong> Módulo 1.3</li>
+          <li><strong>Encontro 3 (4h):</strong> Módulo 2.1</li>
+          <li><strong>Encontro 4 (4h):</strong> Módulo 2.2</li>
+          <li><strong>Encontro 5 (4h):</strong> Módulo 2.3</li>
+          <li><strong>Encontro 6 (4h):</strong> Módulo 3.1 e 3.2</li>
+          <li><strong>Encontro 7 (4h):</strong> Módulo 3.3</li>
+          <li><strong>Encontro 8 (4h):</strong> Módulo 4.1, 4.2 e 4.3 + Showcase (Módulo 5)</li>
+        </ol>
+      </div>
+      <div class="two" style="margin-top:12px">
+        <div class="card">
+          <h3>Adaptação Híbrida/EAD</h3>
+          <ul>
+            <li>Vídeos curtos assíncronos (10–15min) por unidade.</li>
+            <li>Fóruns com protocolos RE e feedback por pares.</li>
+            <li>Sessões síncronas focadas em prática e dúvidas.</li>
+            <li>Entregas modulares com rubricas transparentes.</li>
+            <li>Alternativas <em>low-tech</em> e desplugadas em todas as etapas.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Infra mínima</h3>
+          <ul>
+            <li>Para presencial: sala com projeção e espaço para dinâmicas.</li>
+            <li>Para EAD: plataforma de videoconferência + repositório (Drive/Git/AVA).</li>
+            <li>1 dispositivo por dupla (ou estações rotativas).</li>
+            <li>Materiais simples: cartões, fita, cordas, post-its.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <section id="recursos" aria-labelledby="recursos-t">
+      <h2 id="recursos-t">Recursos e modelos prontos</h2>
+      <div class="two">
+        <div class="card">
+          <h3>Modelos editáveis</h3>
+          <ul>
+            <li>Canvas de projeto MAPEAR</li>
+            <li>Roteiro de RE (antes/durante/depois)</li>
+            <li>Rubrica de PC (padrão)</li>
+            <li>Checklist de acessibilidade didática</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Protocolos de mediação</h3>
+          <ul>
+            <li>Pense–Par–Compartilhe</li>
+            <li>Crítica amigável (Como um amigo)</li>
+            <li>Galeria com feedback pontual</li>
+            <li>Stand-up de aprendizagem (check-in de 2 minutos)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <section id="faq" aria-labelledby="faq-t">
+      <h2 id="faq-t">FAQ</h2>
+      <details>
+        <summary>O que é RE (Reflexão Estruturada)?</summary>
+        <p>É um conjunto de protocolos e instrumentos que promovem metacognição planejada antes, durante e após as atividades, ajudando a consolidar a aprendizagem e a autonomia do estudante.</p>
+      </details>
+      <details>
+        <summary>Preciso de laboratório de informática?</summary>
+        <p>Não. O curso valoriza estratégias <em>low-tech</em> e desplugadas, com uso de tecnologia quando disponível.</p>
+      </details>
+      <details>
+        <summary>Há certificação?</summary>
+        <p>Opcional, mediante cumprimento de carga horária mínima e entrega do projeto final com documentação no banco de práticas.</p>
+      </details>
+    </section>
+
+    <footer class="footer">
+      MAPEAR — Metodologia Ativa de Pensamento Computacional com Ênfase em Aprendizagem Reflexiva • © 2025
+    </footer>
+  </div>
+</body>
+</html>
