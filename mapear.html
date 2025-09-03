@@ -1189,59 +1189,22 @@ label { display: block; font-size: 13px; color: var(--muted); margin: 6px 0; }
         ], esperado: { terrestres: ['bici','carro','moto','cami'], aereo: ['aviao','asa','balao','para'], aquatico: ['navio', 'jet','iate', 'lancha'] }, dica: 'Que perguntas você precisa responder?' },
         { tipo: 'passos', titulo: 'Labirinto pequeno', instrucao: 'Decomponha em passos de movimento.', passos: [ 'Esquerda', 'Frente', 'Direita', 'Frente' ], esperado: [ 'Esquerda', 'Frente', 'Direita', 'Frente' ], dica: 'Passos atômicos formam o caminho.' },
         { tipo: 'categorias', titulo: 'Sequência de números', instrucao: 'Separe em padrões menores.', itens: [
-          { id: 'pares', label: 'Pares', cat: 'pares' },
-          { id: 'impares', label: 'Ímpares', cat: 'impares' }
-        ], esperado: { pares: ['pares'], impares: ['impares'] }, dica: 'Divida por propriedade comum.' },
-        { tipo: 'categorias', titulo: 'Sudoku fácil', instrucao: 'Pense por linha, coluna e bloco.', itens: [
-          { id: 'linha', label: 'Linha', cat: 'linha' },
-          { id: 'coluna', label: 'Coluna', cat: 'coluna' },
-          { id: 'bloco', label: 'Bloco', cat: 'bloco' }
-        ], esperado: { linha: ['linha'], coluna: ['coluna'], bloco: ['bloco'] }, dica: 'Três vistas do mesmo problema.' },
-        { tipo: 'categorias', titulo: 'Organizar baralho', instrucao: 'Separe por naipe e depois números.', itens: [
-          { id: 'naipe', label: 'Naipe', cat: 'naipe' },
-          { id: 'numero', label: 'Número', cat: 'numero' }
-        ], esperado: { naipe: ['naipe'], numero: ['numero'] }, dica: 'Decompor por níveis hierárquicos.' },
-        { tipo: 'passos', titulo: 'Construir torre de blocos', instrucao: 'Base, meio e topo.', passos: [ 'Base', 'Meio', 'Topo' ], esperado: [ 'Base', 'Meio', 'Topo' ], dica: 'Da fundação aos detalhes.' },
-        { tipo: 'categorias', titulo: 'Montar robô de papel', instrucao: 'Divida em cabeça, corpo, braços e pernas.', itens: [
-          { id: 'cabeca', label: 'Cabeça', cat: 'cabeca' },
-          { id: 'corpo', label: 'Corpo', cat: 'corpo' },
-          { id: 'bracos', label: 'Braços', cat: 'bracos' },
-          { id: 'pernas', label: 'Pernas', cat: 'pernas' }
-        ], esperado: { cabeca: ['cabeca'], corpo: ['corpo'], bracos: ['bracos'], pernas: ['pernas'] }, dica: 'Partes do todo.' },
-        { tipo: 'passos', titulo: 'Programar deslocamento (desplugado)', instrucao: 'Divida em micro-passos.', passos: [ 'Frente', 'Virar', 'Andar' ], esperado: [ 'Frente', 'Virar', 'Andar' ], dica: 'Etapas mínimas e ordenadas.' },
-        { tipo: 'categorias', titulo: 'Montar circuito simples', instrucao: 'Fonte, fio e carga.', itens: [
-          { id: 'pilha', label: 'Pilha', cat: 'fonte' },
-          { id: 'fio', label: 'Fio', cat: 'fio' },
-          { id: 'lampada', label: 'Lâmpada', cat: 'carga' }
-        ], esperado: { fonte: ['pilha'], fio: ['fio'], carga: ['lampada'] }, dica: 'Identifique os papéis dos componentes.' },
-        { tipo: 'passos', titulo: 'Receita de robô', instrucao: 'Decomponha "andar até a caixa e pegar".', passos: [ 'Andar até a caixa', 'Pegar objeto' ], esperado: [ 'Andar até a caixa', 'Pegar objeto' ], dica: 'Microinstruções claras.' },
+          { id: '2', label: '2', cat: 'pares' },
+          { id: '32', label: '32', cat: 'pares' },
+          { id: '176', label: '176', cat: 'pares' },
+          { id: '234', label: '234', cat: 'pares' },
+          { id: '18574', label: '18574', cat: 'pares' },
+          { id: '248', label: '248', cat: 'pares' },
+          { id: '366', label: '366', cat: 'pares' },
+          { id: '3', label: '3', cat: 'impares' },
+          { id: '5', label: '5', cat: 'impares' },
+          { id: '11', label: '11', cat: 'impares' },
+          { id: '27', label: '27', cat: 'impares' },
+          { id: '143', label: '143', cat: 'impares' },
+          { id: '221', label: '221', cat: 'impares' }
+        ], esperado: { pares: ['2','32','176','234','18574','366','248'], impares: ['3','5','11','27','143','221'] }, dica: 'Divida por propriedade comum.' },
         { tipo: 'passos', titulo: 'Algoritmo lavar roupa', instrucao: 'Ordem das etapas.', passos: [ 'Molhar', 'Sabão', 'Esfregar', 'Enxaguar', 'Secar' ], esperado: [ 'Molhar', 'Sabão', 'Esfregar', 'Enxaguar', 'Secar' ], dica: 'Fluxo linear.' },
-        { tipo: 'passos', titulo: 'Escovar dentes', instrucao: 'Defina a sequência.', passos: [ 'Passar pasta', 'Escovar', 'Enxaguar' ], esperado: [ 'Passar pasta', 'Escovar', 'Enxaguar' ], dica: 'Do preparo à finalização.' },
-        { tipo: 'categorias', titulo: 'Montar cidade de blocos', instrucao: 'Ruas, casas, árvores, prédios.', itens: [
-          { id: 'ruas', label: 'Ruas', cat: 'ruas' },
-          { id: 'casas', label: 'Casas', cat: 'casas' },
-          { id: 'arvores', label: 'Árvores', cat: 'arvores' },
-          { id: 'predios', label: 'Prédios', cat: 'predios' }
-        ], esperado: { ruas: ['ruas'], casas: ['casas'], arvores: ['arvores'], predios: ['predios'] }, dica: 'Estruture por zonas urbanas.' },
-        { tipo: 'categorias', titulo: 'Planejar uma viagem', instrucao: 'Transporte, hospedagem, passeios, alimentação.', itens: [
-          { id: 'transporte', label: 'Transporte', cat: 'transporte' },
-          { id: 'hospedagem', label: 'Hospedagem', cat: 'hospedagem' },
-          { id: 'passeios', label: 'Passeios', cat: 'passeios' },
-          { id: 'alimentacao', label: 'Alimentação', cat: 'alimentacao' }
-        ], esperado: { transporte: ['transporte'], hospedagem: ['hospedagem'], passeios: ['passeios'], alimentacao: ['alimentacao'] }, dica: 'Subtarefas por tema.' },
-        { tipo: 'categorias', titulo: 'Problema ambiental', instrucao: 'Causas, consequências, soluções.', itens: [
-          { id: 'causas', label: 'Causas', cat: 'causas' },
-          { id: 'consequencias', label: 'Consequências', cat: 'consequencias' },
-          { id: 'solucoes', label: 'Soluções', cat: 'solucoes' }
-        ], esperado: { causas: ['causas'], consequencias: ['consequencias'], solucoes: ['solucoes'] }, dica: 'Mapa causal ajuda a agir.' },
-        { tipo: 'passos', titulo: 'Desenhar um personagem', instrucao: 'Cabeça, tronco, membros, detalhes.', passos: [ 'Cabeça', 'Tronco', 'Membros', 'Detalhes' ], esperado: [ 'Cabeça', 'Tronco', 'Membros', 'Detalhes' ], dica: 'Das formas gerais aos detalhes.' },
-        { tipo: 'passos', titulo: 'Algoritmo para jogo digital', instrucao: 'Início, meio, fim e regras.', passos: [ 'Início', 'Meio', 'Fim', 'Regras' ], esperado: [ 'Início', 'Meio', 'Fim', 'Regras' ], dica: 'Defina fases e regras.' },
-        { tipo: 'categorias', titulo: 'Projeto final: jogo simples', instrucao: 'Enredo, personagens, fases, regras.', itens: [
-          { id: 'enredo', label: 'Enredo', cat: 'enredo' },
-          { id: 'personagens', label: 'Personagens', cat: 'personagens' },
-          { id: 'fases', label: 'Fases', cat: 'fases' },
-          { id: 'regras', label: 'Regras', cat: 'regras' }
-        ], esperado: { enredo: ['enredo'], personagens: ['personagens'], fases: ['fases'], regras: ['regras'] }, dica: 'Planeje os componentes do jogo.' }
+        { tipo: 'passos', titulo: 'Escovar dentes', instrucao: 'Defina a sequência.', passos: [ 'Passar pasta', 'Escovar língua', 'Escovar dentes', 'Enxaguar', 'Pegar escova' ], esperado: [ 'Pegar escova', 'Passar pasta', 'Escovar dentes', 'Escovar língua', 'Enxaguar' ], dica: 'Do preparo à finalização.' }
       ];
 
       let step = 1;
