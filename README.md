@@ -1,2 +1,2 @@
-# mapear.github.io
+# mapear
 MAPEAR
