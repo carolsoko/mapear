@@ -144,6 +144,7 @@ label { display: block; font-size: 13px; color: var(--muted); margin: 6px 0; }
       <a href="#/" data-route>Início</a>
       <a href="#/padroes" data-route>Detective de Padrões</a>
       <a href="#/abstracao" data-route>Abstração</a>
+      <a href="#/decomposicao" data-route>Decomposição</a>
       <a href="#/algoritmo" data-route>Algoritmos</a>
       <a href="#/generalizacao" data-route>Generalize+</a>
       <a href="#/robotica" data-route>Robótica</a>
@@ -166,6 +167,7 @@ label { display: block; font-size: 13px; color: var(--muted); margin: 6px 0; }
       progress: {
         padroes: { completed: false, attempts: 0 },
         abstracao: { completed: false, attempts: 0 },
+        decomposicao: { completed: false, attempts: 0 },
         algoritmo: { completed: false, attempts: 0 },
         generalizacao: { completed: false, attempts: 0 },
         robotica: { completed: false, attempts: 0 }
@@ -173,6 +175,7 @@ label { display: block; font-size: 13px; color: var(--muted); margin: 6px 0; }
       reflections: {
         padroes: '',
         abstracao: '',
+        decomposicao: '',
         algoritmo: '',
         generalizacao: '',
         robotica: ''
@@ -180,6 +183,7 @@ label { display: block; font-size: 13px; color: var(--muted); margin: 6px 0; }
       scores: {
         padroes: null,
         abstracao: null,
+        decomposicao: null,
         algoritmo: null,
         generalizacao: null,
         robotica: null
@@ -280,6 +284,11 @@ label { display: block; font-size: 13px; color: var(--muted); margin: 6px 0; }
         'O que é essencial nesta situação e o que você pode ignorar?',
         'Se mudássemos o contexto, sua solução ainda faria sentido?'
       ],
+      decomposicao: [
+        'Quais partes menores compõem este problema?',
+        'Como dividir em etapas que qualquer pessoa possa seguir?',
+        'Há categorias naturais que organizam os elementos?'
+      ],
       padroes: [
         'Esse comportamento se repete em outros exemplos?',
         'Se fosse prever o próximo valor, em que base você se apoiaria?',
@@ -340,10 +349,19 @@ label { display: block; font-size: 13px; color: var(--muted); margin: 6px 0; }
       });
     }
 
+    function shuffleInPlace(arr) {
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
     const routes = {
       '/': renderHome,
       '/padroes': renderPadroes,
       '/abstracao': renderAbstracao,
+      '/decomposicao': renderDecomposicao,
       '/algoritmo': renderAlgoritmo,
       '/generalizacao': renderGeneralizacao,
       '/robotica': renderRobotica,
@@ -367,7 +385,22 @@ label { display: block; font-size: 13px; color: var(--muted); margin: 6px 0; }
     function renderHome() {
       const stats = Storage.getState();
       appEl.innerHTML = `
-        <section class="grid cols-2">\n          <div class="card">\n            <h1>Bem-vindo(a) ao MAPEAR</h1>\n            <p>Plataforma de minijogos para desenvolver <strong>Abstração</strong>, <strong>Reconhecimento de Padrões</strong>, <strong>Pensamento Algorítmico</strong> e <strong>Generalização</strong>.</p>\n            <div class="tip" style="margin-top:10px;">\n              <div>\n                <div class="badge">Mentores virtuais</div>\n                <div><b>Mentores virtuais:</b><br>- Abstração: Ver além dos detalhes.<br>- Padrões: Encontrar regularidades.<br>- Generalização: Expandir soluções.<br>- Algoritmos: Planejar passo a passo.<br>- Robótica: Interagir através de sensores e atuadores.</div>\n              </div>\n            </div>\n          </div>\n          <div class="card">\n            <h2>Sua jornada</h2>\n            <ul class="list">\n              <li>Detective de Padrões: <strong>${stats.progress.padroes.completed ? 'Concluído' : 'Não realizado'}</strong></li>\n              <li>Abstração: <strong>${stats.progress.abstracao.completed ? 'Concluído' : 'Não realizado'}</strong></li>\n              <li>Algoritmos: <strong>${stats.progress.algoritmo.completed ? 'Concluído' : 'Não realizado'}</strong></li>\n              <li>Generalize+: <strong>${stats.progress.generalizacao.completed ? 'Concluído' : 'Não realizado'}</strong></li>\n              <li>Robótica: <strong>${stats.progress.robotica.completed ? 'Concluído' : 'Não realizado'}</strong></li>\n            </ul>\n            <div style="margin-top:10px; display:flex; gap:10px;">\n              <a id="home-start" class="button" href="#/padroes">Começar agora</a>\n              <a class="button secondary" href="#/relatorios">Ver relatórios</a>\n            </div>\n            <div style="margin-top:10px;">\n              <button id="home-reset" class="button danger">Recomeçar jogos</button>\n            </div>\n          </div>\n        </section>
+        <section class="grid cols-2">\n          <div class="card">\n            <h1>Bem-vindo(a) ao MAPEAR</h1>\n            <p>Plataforma de minijogos para desenvolver <strong>Abstração</strong>, <strong>Reconhecimento de Padrões</strong>, <strong>Pensamento Algorítmico</strong> e <strong>Generalização</strong>.</p>\n            <div class="tip" style="margin-top:10px;">\n              <div>\n                <div class="badge">Mentores virtuais</div>\n                <div><b>Mentores virtuais:</b><br>- Abstração: Ver além dos detalhes.<br>- Padrões: Encontrar regularidades.<br>- Generalização: Expandir soluções.<br>- Algoritmos: Planejar passo a passo.<br>- Robótica: Interagir através de sensores e atuadores.</div>\n              </div>\n            </div>\n          </div>\n          <div class="card">\n            <h2>Sua jornada</h2>\n            <ul class="list">
+              <li>Detective de Padrões: <strong>${stats.progress.padroes.completed ? 'Concluído' : 'Não realizado'}</strong></li>
+              <li>Abstração: <strong>${stats.progress.abstracao.completed ? 'Concluído' : 'Não realizado'}</strong></li>
+              <li>Decomposição: <strong>${(stats.progress.decomposicao && stats.progress.decomposicao.completed) ? 'Concluído' : 'Não realizado'}</strong></li>
+              <li>Algoritmos: <strong>${stats.progress.algoritmo.completed ? 'Concluído' : 'Não realizado'}</strong></li>
+              <li>Generalize+: <strong>${stats.progress.generalizacao.completed ? 'Concluído' : 'Não realizado'}</strong></li>
+              <li>Robótica: <strong>${stats.progress.robotica.completed ? 'Concluído' : 'Não realizado'}</strong></li>
+            </ul>
+            <div style="margin-top:10px; display:flex; gap:10px;">
+              <a id="home-start" class="button" href="#/padroes">Começar agora</a>
+              <a class="button secondary" href="#/relatorios">Ver relatórios</a>
+            </div>
+            <div style="margin-top:10px;">
+              <button id="home-reset" class="button danger">Recomeçar jogos</button>
+            </div>
+          </div>\n        </section>
       `;
       const startBtn = document.querySelector('#home-start');
       if (startBtn) {
@@ -527,7 +560,7 @@ label { display: block; font-size: 13px; color: var(--muted); margin: 6px 0; }
         TipEngine.mountTip('#padroes-tip', { pillar: 'padroes', level: 'Hint' });
         if (isSequence) {
           if (verifyBtn) verifyBtn.style.display = 'none';
-          (current.options || current.opcoes || []).forEach(value => {
+          shuffleInPlace([...(current.options || current.opcoes || [])]).forEach(value => {
             const btn = document.createElement('button');
             btn.className = 'button';
             btn.textContent = String(value);
@@ -560,6 +593,7 @@ label { display: block; font-size: 13px; color: var(--muted); margin: 6px 0; }
                 const failMsg = (Array.isArray(current.sequence) ? 'Observe a variação entre os termos.' : 'Releia a situação e foque no que se repete.');
                 feedbackEl.innerHTML = `<span style=\"color: var(--warning);\">Ainda não. ${failMsg}</span>`;
                 TipEngine.mountTip('#padroes-tip', { pillar: 'padroes', level: 'Scaffold' });
+                setTimeout(renderPhase, 800);
               }
             });
             optsEl.appendChild(btn);
@@ -567,7 +601,7 @@ label { display: block; font-size: 13px; color: var(--muted); margin: 6px 0; }
         } else {
           // texto/situação: render como rádio + botão Verificar
           if (verifyBtn) verifyBtn.style.display = 'inline-flex';
-          (current.options || current.opcoes || []).forEach((value, idx) => {
+          shuffleInPlace([...(current.options || current.opcoes || [])]).forEach((value, idx) => {
             const wrapper = document.createElement('label');
             wrapper.style.display = 'flex';
             wrapper.style.alignItems = 'center';
@@ -619,11 +653,24 @@ label { display: block; font-size: 13px; color: var(--muted); margin: 6px 0; }
                 const failMsg = 'Releia a situação e foque no que se repete.';
                 feedbackEl.innerHTML = `<span style=\"color: var(--warning);\">Ainda não. ${failMsg}</span>`;
                 TipEngine.mountTip('#padroes-tip', { pillar: 'padroes', level: 'Scaffold' });
+                setTimeout(renderPhase, 800);
               }
             };
           }
         }
       }
+
+      // Botão Refazer padrão
+      const refazerBtnWrap = document.createElement('div');
+      refazerBtnWrap.style.marginTop = '8px';
+      const refazerBtn = document.createElement('button');
+      refazerBtn.className = 'button secondary';
+      refazerBtn.textContent = 'Refazer';
+      refazerBtn.addEventListener('click', () => {
+        feedbackEl.textContent = '';
+        renderPhase();
+      });
+      document.querySelector('#padroes-verificar')?.parentElement?.appendChild(refazerBtn);
 
       saveBtn.addEventListener('click', () => {
         Storage.reflect('padroes', reflexEl.value.trim());
@@ -983,7 +1030,7 @@ label { display: block; font-size: 13px; color: var(--muted); margin: 6px 0; }
         listEl.innerHTML = '';
         fb.textContent = '';
         TipEngine.mountTip('#ab-tip', { pillar: 'abstracao', level: 'Hint' });
-        current.items.forEach(item => {
+        shuffleInPlace([...current.items]).forEach(item => {
           const label = document.createElement('label');
           label.style.display = 'flex';
           label.style.gap = '8px';
@@ -1028,8 +1075,9 @@ label { display: block; font-size: 13px; color: var(--muted); margin: 6px 0; }
           }
         } else {
           Storage.record('minigame_try', { key: 'abstracao', step, selection: [...selected] });
-          fb.innerHTML = '<span style="color: var(--warning);">Revise: foque apenas no que responde à pergunta.</span>';
+          fb.innerHTML = '<span style="color: var(--warning);">Revise: foque apenas no que responde à pergunta. Reiniciando...</span>';
           TipEngine.mountTip('#ab-tip', { pillar: 'abstracao', level: 'Scaffold' });
+          setTimeout(renderPhase, 800);
         }
       });
 
@@ -1039,6 +1087,19 @@ label { display: block; font-size: 13px; color: var(--muted); margin: 6px 0; }
         fb.textContent = '';
       });
 
+      // Botão Refazer padrão
+      const abActions = document.getElementById('ab-verificar')?.parentElement;
+      if (abActions) {
+        const refazerBtn = document.createElement('button');
+        refazerBtn.className = 'button secondary';
+        refazerBtn.textContent = 'Refazer';
+        refazerBtn.addEventListener('click', () => {
+          fb.textContent = '';
+          renderPhase();
+        });
+        abActions.appendChild(refazerBtn);
+      }
+
       saveBtn.addEventListener('click', () => {
         Storage.reflect('abstracao', reflexEl.value.trim());
         fb.innerHTML = 'Reflexão salva.';
@@ -1047,8 +1108,384 @@ label { display: block; font-size: 13px; color: var(--muted); margin: 6px 0; }
       renderPhase();
     }
 
+    function renderDecomposicao() {
+      const phases = [
+        { tipo: 'categorias', titulo: 'Arrumar a mochila', instrucao: 'Separe itens por categoria: estudo vs outros.', itens: [
+          { id: 'livros', label: 'Livros', cat: 'estudo' },
+          { id: 'caderno', label: 'Cadernos', cat: 'estudo' },
+          { id: 'lapis', label: 'Lápis', cat: 'estudo' },
+          { id: 'bola', label: 'Bola', cat: 'outros' },
+          { id: 'urso', label: 'Ursinho', cat: 'outros' }
+        ], esperado: { estudo: ['livros','caderno','lápis'], outros: ['bola','urso'] }, dica: 'Pense em grupos naturais: materiais escolares vs. lazer.' },
+        { tipo: 'passos', titulo: 'Preparar o lanche', instrucao: 'Ordene as etapas.', passos: [ 'Lavar fruta', 'Cortar', 'Guardar', 'Levar' ], esperado: [ 'Lavar fruta', 'Cortar', 'Guardar', 'Levar' ], dica: 'Sequencie do preparo ao transporte.' },
+        { tipo: 'passos', titulo: 'Tomar banho', instrucao: 'Clique na ordem correta.', passos: [ 'Ligar chuveiro', 'Molhar', 'Ensaboar', 'Enxaguar', 'Secar' ], esperado: [ 'Ligar chuveiro', 'Molhar', 'Ensaboar', 'Enxaguar', 'Secar' ], dica: 'Do início ao fim, sem pular etapas.' },
+        { tipo: 'categorias', titulo: 'Organizar o quarto', instrucao: 'Separe por áreas.', itens: [
+          { id: 'travesseiro', label: 'Travesseiro', cat: 'cama' },
+          { id: 'lapiseira', label: 'Lapiseira', cat: 'mesa' },
+          { id: 'caderno', label: 'Caderno', cat: 'mesa' },
+          { id: 'camiseta', label: 'Camiseta', cat: 'guarda-roupa' },
+          { id: 'lencol', label: 'Lençol', cat: 'cama' },
+          { id: 'sapato', label: 'Sapato', cat: 'guarda-roupa' }
+        ], esperado: { cama: ['travesseiro','lencol'], mesa: ['lapiseira', 'caderno'], 'guarda-roupa': ['camiseta', 'sapato'] }, dica: 'Áreas físicas ajudam a decompor.' },
+        { tipo: 'passos', titulo: 'Fazer um sanduíche', instrucao: 'Ordene a montagem.', passos: [ 'Abrir pão', 'Passar manteiga', 'Colocar queijo', 'Colocar salada', 'Fechar pão' ], esperado: [ 'Abrir pão', 'Passar manteiga', 'Colocar queijo', 'Colocar salada', 'Fechar pão' ], dica: 'Monte em camadas lógicas.' },
+        { tipo: 'categorias', titulo: 'Brincadeira da festa', instrucao: 'Separe tarefas em comida, decoração e música.', itens: [
+          { id: 'doces', label: 'Doces', cat: 'comida' },
+          { id: 'baloes', label: 'Balões', cat: 'decoração' },
+          { id: 'painel', label: 'Painel do tema', cat: 'decoração' },
+          { id: 'bolo', label: 'Bolo', cat: 'comida' },
+          { id: 'playlist', label: 'Organizar Playlist', cat: 'música' },
+          { id: 'caixa', label: 'Caixa de Som', cat: 'música' },
+          { id: 'salgados', label: 'Salgados', cat: 'comida' }
+        ], esperado: { comida: ['doces','salgados','bolo'], 'decoração': ['baloes', 'painel'], 'música': ['playlist','caixa'] }, dica: 'Categorias são subproblemas.' },
+        { tipo: 'passos', titulo: 'Somar 235 + 478', instrucao: 'Decomponha em centenas, dezenas e unidades.', passos: [ 'Somar unidades (5+8)', 'Somar dezenas (3+7 + vai-um)', 'Somar centenas (2+4 + vai-um)' ], esperado: [ 'Somar unidades (5+8)', 'Somar dezenas (3+7 + vai-um)', 'Somar centenas (2+4 + vai-um)' ], dica: 'Comece pelas partes menores.' },
+        { tipo: 'categorias', titulo: 'Planejar estudos da semana', instrucao: 'Distribua matérias por dias.', itens: [
+          { id: 'mat_seg', label: 'Matemática (Seg)', cat: 'seg' },
+          { id: 'port_ter', label: 'Português (Ter)', cat: 'ter' },
+          { id: 'qui_qua', label: 'Química (Qua)', cat: 'qua' },
+          { id: 'inf_qui', label: 'Informática (Qui)', cat: 'qui' },
+          { id: 'his_sex', label: 'História (Sex)', cat: 'sex' }
+        ], esperado: { seg: ['mat_seg'], ter: ['port_ter'], qua: ['qui_qua'], qui: ['inf_qui'], sex: ['his_sex'] }, dica: 'Fatia por tempo ajuda a executar.' },
+        { tipo: 'passos', titulo: 'Escrever um trabalho escolar', instrucao: 'Ordene partes do texto.', passos: [ 'Introdução', 'Justificativa', 'Desenvolvimento', 'Referências', 'Conclusão' ], esperado: [ 'Introdução', 'Justificativa', 'Desenvolvimento', 'Conclusão','Referências' ], dica: 'Estrutura clássica de textos acadêmicos.' },
+        { tipo: 'categorias', titulo: 'Classificação', instrucao: 'Classifique os animais:', itens: [
+          { id: 'peixe', label: 'Baiacu', cat: 'peixes' },
+          { id: 'tubarao', label: 'Tubarão', cat: 'peixes' },
+          { id: 'cavalo', label: 'Cavalo-Marinho', cat: 'peixes' },
+          { id: 'sala', label: 'Salamandra', cat: 'anfibios' },
+          { id: 'sapo', label: 'Sapo', cat: 'anfibios' },
+          { id: 'lagarto', label: 'Lagarto', cat: 'repteis' },
+          { id: 'cobra', label: 'Cobra', cat: 'repteis' },
+          { id: 'bemtevi', label: 'Bem-te-vi', cat: 'aves' },
+          { id: 'beijaflor', label: 'Beija-flor', cat: 'aves' },
+          { id: 'baleia', label: 'Baleia', cat: 'mamiferos' },
+          { id: 'cao', label: 'Cão', cat: 'mamiferos' },
+          { id: 'oni', label: 'Onitorrinco', cat: 'mamiferos' }
+        ], esperado: { peixes: ['peixe','tubarao','cavalo'], anfibios: ['sala','sapo'], repteis: ['lagarto', 'cobra'], aves: ['beijaflor', 'bemtevi'], mamiferos: ['baleia', 'cao', 'oni'] }, dica: 'Que perguntas você precisa responder?' },
+        { tipo: 'categorias', titulo: 'Classificação', instrucao: 'Classifique os animais por habitat: ', itens: [
+          { id: 'peixe', label: 'Peixe', cat: 'agua' },
+          { id: 'baleia', label: 'Baleia', cat: 'agua' },
+          { id: 'golfinho', label: 'Golfinho', cat: 'agua' },
+          { id: 'jacare', label: 'Jacaré', cat: 'agua' },
+          { id: 'picapau', label: 'Pica-pau', cat: 'ar' },
+          { id: 'bemtevi', label: 'Bem-te-vi', cat: 'ar' },
+          { id: 'beijaflor', label: 'Beija-flor', cat: 'ar' },
+          { id: 'leao', label: 'Leão', cat: 'terra' },
+          { id: 'elefante', label: 'Elefante', cat: 'terra' },
+          { id: 'girafa', label: 'Girafa', cat: 'terra' }
+        ], esperado: { agua: ['peixe','baleia','golfinho','jacare'], ar: ['picapau', 'beijaflor', 'bemtevi'], terra: ['leao', 'elefante', 'girafa'] }, dica: 'Que perguntas você precisa responder?' },
+        { tipo: 'passos', titulo: 'Resolver problema de matemática', instrucao: 'Ordene as etapas.', passos: [ 'Identificar dados', 'Escolher operação', 'Calcular', 'Verificar resultado' ], esperado: [ 'Identificar dados', 'Escolher operação', 'Calcular', 'Verificar resultado' ], dica: 'Defina o plano antes de calcular.' },
+        { tipo: 'categorias', titulo: 'Classificação', instrucao: 'Classifique os meios de transporte:', itens: [
+          { id: 'bici', label: 'Bicicleta', cat: 'terrestre' },
+          { id: 'carro', label: 'Carro', cat: 'terrestre' },
+          { id: 'moto', label: 'Moto', cat: 'terrestre' },
+          { id: 'cami', label: 'Caminhão', cat: 'terrestre' },
+          { id: 'aviao', label: 'Avião', cat: 'aereo' },
+          { id: 'asa', label: 'Asa-Delta',  cat: 'aereo' },
+          { id: 'balao', label: 'Balão de Ar-quente',  cat: 'aereo' },
+          { id: 'para', label: 'Parapente',  cat: 'aereo' },
+          { id: 'navio', label: 'Navio', cat: 'aquatico' },
+          { id: 'jet', label: 'Jet Ski', cat: 'aquatico' },
+          { id: 'lancha', label: 'Lancha', cat: 'aquatico'},
+          { id: 'iate', label: 'Iate', cat: 'aquatico'}
+        ], esperado: { terrestres: ['bici','carro','moto','cami'], aereo: ['aviao','asa','balao','para'], aquatico: ['navio', 'jet','iate', 'lancha'] }, dica: 'Que perguntas você precisa responder?' },
+        { tipo: 'passos', titulo: 'Labirinto pequeno', instrucao: 'Decomponha em passos de movimento.', passos: [ 'Esquerda', 'Frente', 'Direita', 'Frente' ], esperado: [ 'Esquerda', 'Frente', 'Direita', 'Frente' ], dica: 'Passos atômicos formam o caminho.' },
+        { tipo: 'categorias', titulo: 'Sequência de números', instrucao: 'Separe em padrões menores.', itens: [
+          { id: 'pares', label: 'Pares', cat: 'pares' },
+          { id: 'impares', label: 'Ímpares', cat: 'impares' }
+        ], esperado: { pares: ['pares'], impares: ['impares'] }, dica: 'Divida por propriedade comum.' },
+        { tipo: 'categorias', titulo: 'Sudoku fácil', instrucao: 'Pense por linha, coluna e bloco.', itens: [
+          { id: 'linha', label: 'Linha', cat: 'linha' },
+          { id: 'coluna', label: 'Coluna', cat: 'coluna' },
+          { id: 'bloco', label: 'Bloco', cat: 'bloco' }
+        ], esperado: { linha: ['linha'], coluna: ['coluna'], bloco: ['bloco'] }, dica: 'Três vistas do mesmo problema.' },
+        { tipo: 'categorias', titulo: 'Organizar baralho', instrucao: 'Separe por naipe e depois números.', itens: [
+          { id: 'naipe', label: 'Naipe', cat: 'naipe' },
+          { id: 'numero', label: 'Número', cat: 'numero' }
+        ], esperado: { naipe: ['naipe'], numero: ['numero'] }, dica: 'Decompor por níveis hierárquicos.' },
+        { tipo: 'passos', titulo: 'Construir torre de blocos', instrucao: 'Base, meio e topo.', passos: [ 'Base', 'Meio', 'Topo' ], esperado: [ 'Base', 'Meio', 'Topo' ], dica: 'Da fundação aos detalhes.' },
+        { tipo: 'categorias', titulo: 'Montar robô de papel', instrucao: 'Divida em cabeça, corpo, braços e pernas.', itens: [
+          { id: 'cabeca', label: 'Cabeça', cat: 'cabeca' },
+          { id: 'corpo', label: 'Corpo', cat: 'corpo' },
+          { id: 'bracos', label: 'Braços', cat: 'bracos' },
+          { id: 'pernas', label: 'Pernas', cat: 'pernas' }
+        ], esperado: { cabeca: ['cabeca'], corpo: ['corpo'], bracos: ['bracos'], pernas: ['pernas'] }, dica: 'Partes do todo.' },
+        { tipo: 'passos', titulo: 'Programar deslocamento (desplugado)', instrucao: 'Divida em micro-passos.', passos: [ 'Frente', 'Virar', 'Andar' ], esperado: [ 'Frente', 'Virar', 'Andar' ], dica: 'Etapas mínimas e ordenadas.' },
+        { tipo: 'categorias', titulo: 'Montar circuito simples', instrucao: 'Fonte, fio e carga.', itens: [
+          { id: 'pilha', label: 'Pilha', cat: 'fonte' },
+          { id: 'fio', label: 'Fio', cat: 'fio' },
+          { id: 'lampada', label: 'Lâmpada', cat: 'carga' }
+        ], esperado: { fonte: ['pilha'], fio: ['fio'], carga: ['lampada'] }, dica: 'Identifique os papéis dos componentes.' },
+        { tipo: 'passos', titulo: 'Receita de robô', instrucao: 'Decomponha "andar até a caixa e pegar".', passos: [ 'Andar até a caixa', 'Pegar objeto' ], esperado: [ 'Andar até a caixa', 'Pegar objeto' ], dica: 'Microinstruções claras.' },
+        { tipo: 'passos', titulo: 'Algoritmo lavar roupa', instrucao: 'Ordem das etapas.', passos: [ 'Molhar', 'Sabão', 'Esfregar', 'Enxaguar', 'Secar' ], esperado: [ 'Molhar', 'Sabão', 'Esfregar', 'Enxaguar', 'Secar' ], dica: 'Fluxo linear.' },
+        { tipo: 'passos', titulo: 'Escovar dentes', instrucao: 'Defina a sequência.', passos: [ 'Passar pasta', 'Escovar', 'Enxaguar' ], esperado: [ 'Passar pasta', 'Escovar', 'Enxaguar' ], dica: 'Do preparo à finalização.' },
+        { tipo: 'categorias', titulo: 'Montar cidade de blocos', instrucao: 'Ruas, casas, árvores, prédios.', itens: [
+          { id: 'ruas', label: 'Ruas', cat: 'ruas' },
+          { id: 'casas', label: 'Casas', cat: 'casas' },
+          { id: 'arvores', label: 'Árvores', cat: 'arvores' },
+          { id: 'predios', label: 'Prédios', cat: 'predios' }
+        ], esperado: { ruas: ['ruas'], casas: ['casas'], arvores: ['arvores'], predios: ['predios'] }, dica: 'Estruture por zonas urbanas.' },
+        { tipo: 'categorias', titulo: 'Planejar uma viagem', instrucao: 'Transporte, hospedagem, passeios, alimentação.', itens: [
+          { id: 'transporte', label: 'Transporte', cat: 'transporte' },
+          { id: 'hospedagem', label: 'Hospedagem', cat: 'hospedagem' },
+          { id: 'passeios', label: 'Passeios', cat: 'passeios' },
+          { id: 'alimentacao', label: 'Alimentação', cat: 'alimentacao' }
+        ], esperado: { transporte: ['transporte'], hospedagem: ['hospedagem'], passeios: ['passeios'], alimentacao: ['alimentacao'] }, dica: 'Subtarefas por tema.' },
+        { tipo: 'categorias', titulo: 'Problema ambiental', instrucao: 'Causas, consequências, soluções.', itens: [
+          { id: 'causas', label: 'Causas', cat: 'causas' },
+          { id: 'consequencias', label: 'Consequências', cat: 'consequencias' },
+          { id: 'solucoes', label: 'Soluções', cat: 'solucoes' }
+        ], esperado: { causas: ['causas'], consequencias: ['consequencias'], solucoes: ['solucoes'] }, dica: 'Mapa causal ajuda a agir.' },
+        { tipo: 'passos', titulo: 'Desenhar um personagem', instrucao: 'Cabeça, tronco, membros, detalhes.', passos: [ 'Cabeça', 'Tronco', 'Membros', 'Detalhes' ], esperado: [ 'Cabeça', 'Tronco', 'Membros', 'Detalhes' ], dica: 'Das formas gerais aos detalhes.' },
+        { tipo: 'passos', titulo: 'Algoritmo para jogo digital', instrucao: 'Início, meio, fim e regras.', passos: [ 'Início', 'Meio', 'Fim', 'Regras' ], esperado: [ 'Início', 'Meio', 'Fim', 'Regras' ], dica: 'Defina fases e regras.' },
+        { tipo: 'categorias', titulo: 'Projeto final: jogo simples', instrucao: 'Enredo, personagens, fases, regras.', itens: [
+          { id: 'enredo', label: 'Enredo', cat: 'enredo' },
+          { id: 'personagens', label: 'Personagens', cat: 'personagens' },
+          { id: 'fases', label: 'Fases', cat: 'fases' },
+          { id: 'regras', label: 'Regras', cat: 'regras' }
+        ], esperado: { enredo: ['enredo'], personagens: ['personagens'], fases: ['fases'], regras: ['regras'] }, dica: 'Planeje os componentes do jogo.' }
+      ];
+
+      let step = 1;
+      let attempts = 0;
+      let corrects = 0;
+
+      try {
+        const params = new URLSearchParams((window.location.hash.split('?')[1] || ''));
+        const faseParam = parseInt(params.get('fase') || '1', 10);
+        if (!Number.isNaN(faseParam)) step = Math.max(1, Math.min(phases.length, faseParam));
+      } catch {}
+
+      appEl.innerHTML = `
+        <section class="card">
+          <h1>Decomposição</h1>
+          <div class="muted" id="dec-phase">Fase 1 de ${phases.length}</div>
+          <div style="margin-top:8px;">
+            <label for="dec-jump">Ir para fase:</label>
+            <select id="dec-jump" class="input" style="max-width:120px; display:inline-block; margin-left:8px;"></select>
+          </div>
+          <p id="dec-instrucao"></p>
+          <div id="dec-area" style="margin-top:8px;"></div>
+          <div style="display:flex; gap:10px; margin-top:10px;">
+            <button id="dec-verificar" class="button">Verificar</button>
+            <button id="dec-refazer" class="button secondary">Refazer</button>
+            <a id="dec-prosseguir" class="button" href="#/algoritmo" style="display:none;">Próximo: Algoritmos</a>
+          </div>
+          <div id="dec-feedback" class="muted" style="margin-top:10px;"></div>
+          <div class="tip" style="margin-top:12px;">
+            <div><div id="dec-tip"></div></div>
+          </div>
+          <div style="margin-top:14px;">
+            <label for="dec-reflexao">Reflexão (MAPEAR):</label>
+            <textarea id="dec-reflexao" class="input" rows="3" placeholder="Como você dividiu o problema? Por quê?"></textarea>
+            <button id="dec-salvar" class="button secondary" disabled style="margin-top:8px;">Salvar reflexão</button>
+          </div>
+        </section>
+      `;
+
+      const phaseEl = document.getElementById('dec-phase');
+      const instrEl = document.getElementById('dec-instrucao');
+      const areaEl = document.getElementById('dec-area');
+      const fb = document.getElementById('dec-feedback');
+      const btnCheck = document.getElementById('dec-verificar');
+      const btnNext = document.getElementById('dec-prosseguir');
+      const reflexEl = document.getElementById('dec-reflexao');
+      const saveBtn = document.getElementById('dec-salvar');
+      const jumpEl = document.getElementById('dec-jump');
+
+      if (jumpEl) {
+        for (let i = 1; i <= phases.length; i++) {
+          const opt = document.createElement('option');
+          opt.value = String(i);
+          opt.textContent = String(i);
+          if (i === step) opt.selected = true;
+          jumpEl.appendChild(opt);
+        }
+        jumpEl.addEventListener('change', () => {
+          const next = parseInt(jumpEl.value, 10);
+          if (!Number.isNaN(next)) {
+            step = Math.max(1, Math.min(phases.length, next));
+            if (history && history.replaceState) {
+              history.replaceState(null, '', `#/decomposicao?fase=${step}`);
+            }
+            renderPhase();
+          }
+        });
+      }
+
+      let currentSelection = [];
+      let currentPlaced = {};
+      let selectedItem = null;
+
+      function shuffleInPlace(arr) {
+        for (let i = arr.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+      }
+
+      function resetPhase() {
+        currentSelection = [];
+        currentPlaced = {};
+        selectedItem = null;
+        renderPhase();
+      }
+
+      function renderPhase() {
+        const current = phases[step - 1];
+        phaseEl.textContent = `Fase ${step} de ${phases.length}`;
+        if (jumpEl) jumpEl.value = String(step);
+        TipEngine.mountTip('#dec-tip', { pillar: 'decomposicao', level: 'Hint' });
+        fb.textContent = '';
+        areaEl.innerHTML = '';
+        instrEl.textContent = `${current.titulo} — ${current.instrucao}`;
+
+        if (current.tipo === 'passos') {
+          currentSelection = [];
+          const list = document.createElement('div');
+          list.style.display = 'flex';
+          list.style.flexWrap = 'wrap';
+          list.style.gap = '8px';
+          const sel = document.createElement('div');
+          sel.id = 'dec-plan';
+          sel.className = 'muted';
+          sel.style.marginTop = '8px';
+          sel.textContent = '(selecione na ordem)';
+          const shuffled = shuffleInPlace([...current.passos]);
+          shuffled.forEach(p => {
+            const btn = document.createElement('button');
+            btn.className = 'button';
+            btn.textContent = p;
+            btn.addEventListener('click', () => {
+              if (!currentSelection.includes(p)) currentSelection.push(p);
+              btn.className = 'button active';
+              sel.textContent = currentSelection.length ? currentSelection.join(' → ') : '(selecione na ordem)';
+            });
+            list.appendChild(btn);
+          });
+          areaEl.appendChild(list);
+          areaEl.appendChild(sel);
+        } else if (current.tipo === 'categorias') {
+          const cats = Object.keys(current.esperado);
+          currentPlaced = {};
+          cats.forEach(c => currentPlaced[c] = []);
+
+          const pool = document.createElement('div');
+          pool.style.display = 'flex';
+          pool.style.flexWrap = 'wrap';
+          pool.style.gap = '8px';
+          const itemsShuffled = shuffleInPlace([...current.itens]);
+          itemsShuffled.forEach(it => {
+            const btn = document.createElement('button');
+            btn.className = 'button';
+            btn.textContent = it.label;
+            btn.addEventListener('click', () => {
+              selectedItem = it;
+              Array.from(pool.children).forEach(ch => ch.className = 'button');
+              btn.className = 'button active';
+            });
+            pool.appendChild(btn);
+          });
+
+          const targets = document.createElement('div');
+          targets.style.display = 'grid';
+          targets.style.gridTemplateColumns = 'repeat(2, minmax(0,1fr))';
+          targets.style.gap = '8px';
+          const catsShuffled = shuffleInPlace([...cats]);
+          catsShuffled.forEach(cat => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            const title = document.createElement('h3');
+            title.textContent = cat.charAt(0).toUpperCase() + cat.slice(1);
+            const zone = document.createElement('div');
+            zone.style.display = 'flex';
+            zone.style.flexWrap = 'wrap';
+            zone.style.gap = '6px';
+            zone.style.marginTop = '6px';
+            card.appendChild(title);
+            card.appendChild(zone);
+            card.addEventListener('click', () => {
+              if (selectedItem) {
+                if (!currentPlaced[cat].includes(selectedItem.id)) {
+                  currentPlaced[cat].push(selectedItem.id);
+                  const tag = document.createElement('span');
+                  tag.className = 'kbd';
+                  tag.textContent = selectedItem.label;
+                  zone.appendChild(tag);
+                }
+                selectedItem = null;
+                Array.from(pool.children).forEach(ch => ch.className = 'button');
+              }
+            });
+            targets.appendChild(card);
+          });
+
+          areaEl.appendChild(pool);
+          areaEl.appendChild(targets);
+        }
+      }
+
+      btnCheck.addEventListener('click', () => {
+        attempts += 1;
+        Storage.attempt('decomposicao');
+        const current = phases[step - 1];
+        let ok = false;
+        if (current.tipo === 'passos') {
+          const expected = current.esperado;
+          ok = currentSelection.length === expected.length && currentSelection.every((v, i) => v === expected[i]);
+        } else if (current.tipo === 'categorias') {
+          const expected = current.esperado;
+          ok = Object.keys(expected).every(cat => {
+            const exp = expected[cat].slice().sort().join(',');
+            const got = (currentPlaced[cat] || []).slice().sort().join(',');
+            return exp === got;
+          });
+        }
+
+        if (ok) {
+          corrects += 1;
+          if (step < phases.length) {
+            Storage.record('minigame_step', { key: 'decomposicao', step, correct: true });
+            fb.innerHTML = '<span style="color: var(--ok);">Certo! Próxima fase...</span>';
+            step += 1;
+            setTimeout(renderPhase, 1200);
+          } else {
+            const mistakes = attempts - corrects;
+            const raw = Math.round(10 * phases.length / Math.max(attempts, 1));
+            const score = Math.max(0, Math.min(10, raw));
+            Storage.score('decomposicao', score);
+            Storage.complete('decomposicao');
+            Storage.achieve('Decompôs problemas em partes manejáveis');
+            Storage.record('minigame_result', { key: 'decomposicao', attempts, mistakes, correct: true });
+            fb.innerHTML = '<span style="color: var(--ok);">Concluído! Você decompôs vários desafios.</span>';
+            btnNext.style.display = 'inline-flex';
+            saveBtn.disabled = false;
+          }
+        } else {
+          Storage.record('minigame_try', { key: 'decomposicao', step });
+          fb.innerHTML = '<span style="color: var(--warning);">Ainda não. Reiniciando a fase para tentar novamente...</span>';
+          TipEngine.mountTip('#dec-tip', { pillar: 'decomposicao', level: 'Scaffold' });
+          setTimeout(() => { resetPhase(); }, 800);
+        }
+      });
+
+      const btnReset = document.getElementById('dec-refazer');
+      if (btnReset) {
+        btnReset.addEventListener('click', () => {
+          fb.textContent = '';
+          resetPhase();
+        });
+      }
+
+      saveBtn.addEventListener('click', () => {
+        Storage.reflect('decomposicao', reflexEl.value.trim());
+        fb.innerHTML = 'Reflexão salva.';
+      });
+
+      renderPhase();
+    }
+
     function renderAlgoritmo() {
-      const blocks = [ 'Andar 2', 'Bater massa', 'Varredura linha 3', 'Andar 3','Esperar 30min','Varredura linha 1', 'Digitar', 'Digitar login', 'Virar esquerda',  'Varredura linha 2', 'Virar direita', 'Andar 1', 'Colocar saquinho de chá', 'Pré-aquecer forno','Digitar senha','Colocar a massa no forno', 'Servir','Ferver água', 'Colocar água fervida na xícara','Clicar em validar', 'Abrir perfil', 'Andar 4'];
+      const blocks = shuffleInPlace([ 'Andar 2', 'Bater massa', 'Varredura linha 3', 'Andar 3','Esperar 30min','Varredura linha 1', 'Digitar', 'Digitar login', 'Virar esquerda',  'Varredura linha 2', 'Virar direita', 'Andar 1', 'Colocar saquinho de chá', 'Pré-aquecer forno','Digitar senha','Colocar a massa no forno', 'Servir','Ferver água', 'Colocar água fervida na xícara','Clicar em validar', 'Abrir perfil', 'Andar 4']);
       const phases = [
         { expected: ['Andar 2','Virar direita','Andar 1'], note: 'Plano curto e direto.' },
         { expected: ['Andar 2','Virar esquerda','Andar 2','Virar direita','Andar 1'], note: 'Inclui mudanças de direção mais de uma vez.' },
@@ -1225,7 +1662,7 @@ label { display: block; font-size: 13px; color: var(--muted); margin: 6px 0; }
         if (planEl) planEl.textContent = isScenario ? '(selecione uma opção acima)' : (plan.length ? plan.join(' → ') : '(vazio)');
         blocksEl.innerHTML = '';
         if (isScenario) {
-          (current.opcoes || []).forEach(opt => {
+          shuffleInPlace([...(current.opcoes || [])]).forEach(opt => {
             const btn = document.createElement('button');
             btn.className = 'button';
             btn.textContent = String(opt);
@@ -1280,12 +1717,13 @@ label { display: block; font-size: 13px; color: var(--muted); margin: 6px 0; }
         } else {
           if (isScenario) {
             Storage.record('minigame_try', { key: 'algoritmo', step, choice: scenarioChoice });
-            fb.innerHTML = '<span style="color: var(--warning);">Reveja a situação e a ordem correta de ações.</span>';
+            fb.innerHTML = '<span style="color: var(--warning);">Reveja a situação e a ordem correta de ações. Reiniciando...</span>';
           } else {
             Storage.record('minigame_try', { key: 'algoritmo', step, plan: [...plan] });
-            fb.innerHTML = '<span style="color: var(--warning);">Teste passo a passo: onde seu plano falha?</span>';
+            fb.innerHTML = '<span style="color: var(--warning);">Teste passo a passo: onde seu plano falha? Reiniciando...</span>';
           }
           TipEngine.mountTip('#alg-tip', { pillar: 'algoritmo', level: 'Scaffold' });
+          setTimeout(renderPhase, 800);
         }
       });
 
@@ -1294,6 +1732,18 @@ label { display: block; font-size: 13px; color: var(--muted); margin: 6px 0; }
         renderPlan();
         fb.textContent = '';
       });
+
+      // Botão Refazer extra para cenários
+      if (isScenario) {
+        const refazer = document.createElement('button');
+        refazer.className = 'button secondary';
+        refazer.textContent = 'Refazer';
+        refazer.addEventListener('click', () => {
+          fb.textContent = '';
+          renderPhase();
+        });
+        planCardEl?.querySelector('div')?.appendChild(refazer);
+      }
 
       saveBtn.addEventListener('click', () => {
         Storage.reflect('algoritmo', reflexEl.value.trim());
@@ -1418,7 +1868,7 @@ label { display: block; font-size: 13px; color: var(--muted); margin: 6px 0; }
         }
         if (jumpEl) jumpEl.value = String(step);
         TipEngine.mountTip('#gen-tip', { pillar: 'generalizacao', level: 'Hint' });
-        const values = isScenario ? (current.opcoes || []) : (current.set || []);
+        const values = isScenario ? shuffleInPlace([...(current.opcoes || [])]) : shuffleInPlace([...(current.set || [])]);
         values.forEach(v => {
           const btn = document.createElement('button');
           btn.className = 'button';
@@ -1466,10 +1916,24 @@ label { display: block; font-size: 13px; color: var(--muted); margin: 6px 0; }
         } else {
           Storage.record('minigame_try', { key: 'generalizacao', step, selection: [...selection] });
           const warn = isScenario ? (current.dica || 'Releia a pergunta e aplique a regra aprendida.') : 'Mesma lógica: selecione apenas os valores que atendem à regra.';
-          fb.innerHTML = `<span style="color: var(--warning);">${warn}</span>`;
+          fb.innerHTML = `<span style=\"color: var(--warning);\">${warn} Reiniciando...</span>`;
           TipEngine.mountTip('#gen-tip', { pillar: 'generalizacao', level: 'Scaffold' });
+          setTimeout(renderPhase, 800);
         }
       });
+
+      // Botão Refazer
+      const genActions = document.getElementById('gen-verificar')?.parentElement;
+      if (genActions) {
+        const refazerBtn = document.createElement('button');
+        refazerBtn.className = 'button secondary';
+        refazerBtn.textContent = 'Refazer';
+        refazerBtn.addEventListener('click', () => {
+          fb.textContent = '';
+          renderPhase();
+        });
+        genActions.appendChild(refazerBtn);
+      }
 
       saveBtn.addEventListener('click', () => {
         Storage.reflect('generalizacao', reflexEl.value.trim());
@@ -1533,8 +1997,8 @@ label { display: block; font-size: 13px; color: var(--muted); margin: 6px 0; }
         {
           situacao: 'Sensor de umidade do solo indica seco (0–10%).',
           pergunta: 'Qual atuador resolve a necessidade imediata?',
-          opcoes: ['Acionar bomba d’água', 'Acender LED verde', 'Reproduzir som'],
-          correta: 'Acionar bomba d’água',
+          opcoes: ["Acionar bomba d'água", 'Acender LED verde', 'Reproduzir som'],
+          correta: "Acionar bomba d'água",
           dica: 'Atuador deve alterar o estado medido pelo sensor.'
         },
         {
@@ -1748,7 +2212,7 @@ label { display: block; font-size: 13px; color: var(--muted); margin: 6px 0; }
             }
           });
         }
-        fase.opcoes.forEach(opt => {
+        shuffleInPlace([...(fase.opcoes || [])]).forEach(opt => {
           const btn = document.createElement("button");
           btn.className = "button";
           btn.textContent = opt;
@@ -1776,9 +2240,10 @@ label { display: block; font-size: 13px; color: var(--muted); margin: 6px 0; }
                 document.getElementById("robotica-prosseguir").style.display = "inline-flex";
               }
             } else {
-              fb.innerHTML = `<span style=\"color: var(--warning);\">Ainda não. Dica: ${fase.dica}</span>`;
+              fb.innerHTML = `<span style=\"color: var(--warning);\">Ainda não. Dica: ${fase.dica} Reiniciando...</span>`;
               TipEngine.mountTip('#robotica-tip', { pillar: 'robotica', level: 'Scaffold', prompts: [ fase.dica ] });
               Storage.record('minigame_try', { key: 'robotica', step: etapa + 1, guess: opt });
+              setTimeout(carregarFase, 800);
             }
           });
           opcoesEl.appendChild(btn);
@@ -1794,6 +2259,20 @@ label { display: block; font-size: 13px; color: var(--muted); margin: 6px 0; }
           Storage.reflect('robotica', reflexEl.value.trim());
           fb.innerHTML = 'Reflexão salva.';
         });
+
+        // Botão Refazer
+        const actionsWrap = document.getElementById('robotica-jump')?.parentElement;
+        if (actionsWrap) {
+          const refazerBtn = document.createElement('button');
+          refazerBtn.className = 'button secondary';
+          refazerBtn.textContent = 'Refazer';
+          refazerBtn.style.marginLeft = '8px';
+          refazerBtn.addEventListener('click', () => {
+            fb.textContent = '';
+            carregarFase();
+          });
+          actionsWrap.appendChild(refazerBtn);
+        }
       }
 
       carregarFase();
@@ -1812,6 +2291,7 @@ label { display: block; font-size: 13px; color: var(--muted); margin: 6px 0; }
               <ul class="list">
                 <li>Padrões: <strong>${toScore(state.scores.padroes)}</strong></li>
                 <li>Abstração: <strong>${toScore(state.scores.abstracao)}</strong></li>
+                <li>Decomposição: <strong>${toScore(state.scores.decomposicao)}</strong></li>
                 <li>Algoritmo: <strong>${toScore(state.scores.algoritmo)}</strong></li>
                 <li>Generalização: <strong>${toScore(state.scores.generalizacao)}</strong></li>
                 <li>Robótica: <strong>${toScore(state.scores.robotica)}</strong></li>
@@ -1822,6 +2302,7 @@ label { display: block; font-size: 13px; color: var(--muted); margin: 6px 0; }
               <ul class="list">
                 <li><strong>Padrões:</strong> ${state.reflections.padroes || '<span class="muted">—</span>'}</li>
                 <li><strong>Abstração:</strong> ${state.reflections.abstracao || '<span class="muted">—</span>'}</li>
+                <li><strong>Decomposição:</strong> ${state.reflections.decomposicao || '<span class="muted">—</span>'}</li>
                 <li><strong>Algoritmo:</strong> ${state.reflections.algoritmo || '<span class="muted">—</span>'}</li>
                 <li><strong>Generalização:</strong> ${state.reflections.generalizacao || '<span class="muted">—</span>'}</li>
                 <li><strong>Robótica:</strong> ${state.reflections.robotica || '<span class="muted">—</span>'}</li>
