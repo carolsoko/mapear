@@ -1204,7 +1204,74 @@ label { display: block; font-size: 13px; color: var(--muted); margin: 6px 0; }
           { id: '221', label: '221', cat: 'impares' }
         ], esperado: { pares: ['2','32','176','234','18574','366','248'], impares: ['3','5','11','27','143','221'] }, dica: 'Divida por propriedade comum.' },
         { tipo: 'passos', titulo: 'Algoritmo lavar roupa', instrucao: 'Ordem das etapas.', passos: [ 'Molhar', 'Sabão', 'Esfregar', 'Enxaguar', 'Secar' ], esperado: [ 'Molhar', 'Sabão', 'Esfregar', 'Enxaguar', 'Secar' ], dica: 'Fluxo linear.' },
-        { tipo: 'passos', titulo: 'Escovar dentes', instrucao: 'Defina a sequência.', passos: [ 'Passar pasta', 'Escovar língua', 'Escovar dentes', 'Enxaguar', 'Pegar escova' ], esperado: [ 'Pegar escova', 'Passar pasta', 'Escovar dentes', 'Escovar língua', 'Enxaguar' ], dica: 'Do preparo à finalização.' }
+        { tipo: 'passos', titulo: 'Escovar dentes', instrucao: 'Defina a sequência.', passos: [ 'Passar pasta', 'Escovar língua', 'Escovar dentes', 'Enxaguar', 'Pegar escova' ], esperado: [ 'Pegar escova', 'Passar pasta', 'Escovar dentes', 'Escovar língua', 'Enxaguar' ], dica: 'Do preparo à finalização.' },
+        { tipo: 'categorias', titulo: 'Itens para fazer bolo', instrucao: 'Separe em ingredientes e utensílios.', itens: [
+          { id: 'farinha', label: 'Farinha', cat: 'ingredientes' },
+          { id: 'acucar', label: 'Açúcar', cat: 'ingredientes' },
+          { id: 'ovos', label: 'Ovos', cat: 'ingredientes' },
+          { id: 'manteiga', label: 'Manteiga', cat: 'ingredientes' },
+          { id: 'tigela', label: 'Tigela', cat: 'utensilios' },
+          { id: 'fouet', label: 'Batedor (fouet)', cat: 'utensilios' },
+          { id: 'forma', label: 'Forma', cat: 'utensilios' }
+        ], esperado: { ingredientes: ['farinha','acucar','ovos','manteiga'], utensilios: ['tigela','fouet','forma'] }, dica: 'Separe o que é consumido do que é usado para preparar.' },
+        { tipo: 'passos', titulo: 'Montar uma barraca', instrucao: 'Ordene as etapas de montagem.', passos: [ 'Escolher local', 'Abrir estrutura', 'Fixar estacas', 'Esticar lonas', 'Conferir tencionamento' ], esperado: [ 'Escolher local', 'Abrir estrutura', 'Fixar estacas', 'Esticar lonas', 'Conferir tencionamento' ], dica: 'Do planejamento à verificação final.' },
+        { tipo: 'categorias', titulo: 'Roupa para o clima', instrucao: 'Classifique as roupas por frio, calor ou chuva.', itens: [
+          { id: 'casaco', label: 'Casaco', cat: 'frio' },
+          { id: 'luvas', label: 'Luvas', cat: 'frio' },
+          { id: 'gorro', label: 'Gorro', cat: 'frio' },
+          { id: 'regata', label: 'Regata', cat: 'calor' },
+          { id: 'shorts', label: 'Shorts', cat: 'calor' },
+          { id: 'chinelo', label: 'Chinelo', cat: 'calor' },
+          { id: 'guarda_chuva', label: 'Guarda-chuva', cat: 'chuva' },
+          { id: 'capa_chuva', label: 'Capa de chuva', cat: 'chuva' }
+        ], esperado: { frio: ['casaco','luvas','gorro'], calor: ['regata','shorts','chinelo'], chuva: ['guarda_chuva','capa_chuva'] }, dica: 'Use a condição climática como critério.' },
+        { tipo: 'passos', titulo: 'Reciclagem doméstica', instrucao: 'Ordene as ações para reciclar.', passos: [ 'Separar materiais', 'Lavar embalagens', 'Secar embalagens', 'Armazenar corretamente', 'Levar ao ponto de coleta' ], esperado: [ 'Separar materiais', 'Lavar embalagens', 'Secar embalagens', 'Armazenar corretamente', 'Levar ao ponto de coleta' ], dica: 'Limpeza antes do descarte.' },
+        { tipo: 'categorias', titulo: 'Componentes do computador', instrucao: 'Classifique por função.', itens: [
+          { id: 'teclado', label: 'Teclado', cat: 'entrada' },
+          { id: 'mouse', label: 'Mouse', cat: 'entrada' },
+          { id: 'microfone', label: 'Microfone', cat: 'entrada' },
+          { id: 'cpu', label: 'CPU', cat: 'processamento' },
+          { id: 'ram', label: 'Memória RAM', cat: 'processamento' },
+          { id: 'monitor', label: 'Monitor', cat: 'saida' },
+          { id: 'alto_falante', label: 'Alto-falante', cat: 'saida' },
+          { id: 'hd', label: 'HD', cat: 'armazenamento' },
+          { id: 'ssd', label: 'SSD', cat: 'armazenamento' }
+        ], esperado: { entrada: ['teclado','mouse','microfone'], processamento: ['cpu','ram'], saida: ['monitor','alto_falante'], armazenamento: ['hd','ssd'] }, dica: 'Entrada processa e sai: E/P/S + armazenamento.' },
+        { tipo: 'passos', titulo: 'Fazer chá', instrucao: 'Organize as etapas.', passos: [ 'Aquecer água', 'Colocar saquinho', 'Aguardar infusão', 'Adoçar', 'Servir' ], esperado: [ 'Aquecer água', 'Colocar saquinho', 'Aguardar infusão', 'Adoçar', 'Servir' ], dica: 'Infusão antes de servir.' },
+        { tipo: 'categorias', titulo: 'Alimentos', instrucao: 'Separe em frutas e legumes.', itens: [
+          { id: 'maca', label: 'Maçã', cat: 'frutas' },
+          { id: 'banana', label: 'Banana', cat: 'frutas' },
+          { id: 'pera', label: 'Pera', cat: 'frutas' },
+          { id: 'cenoura', label: 'Cenoura', cat: 'legumes' },
+          { id: 'batata', label: 'Batata', cat: 'legumes' },
+          { id: 'tomate', label: 'Tomate', cat: 'legumes' }
+        ], esperado: { frutas: ['maca','banana','pera'], legumes: ['cenoura','batata','tomate'] }, dica: 'Pense em grupos alimentares simples.' },
+        { tipo: 'passos', titulo: 'Publicar um trabalho', instrucao: 'Defina a ordem do processo.', passos: [ 'Escrever rascunho', 'Revisar texto', 'Formatar documento', 'Exportar PDF', 'Enviar' ], esperado: [ 'Escrever rascunho', 'Revisar texto', 'Formatar documento', 'Exportar PDF', 'Enviar' ], dica: 'Do conteúdo ao envio.' },
+        { tipo: 'categorias', titulo: 'Formas geométricas', instrucao: 'Classifique por tipo.', itens: [
+          { id: 'triangulo', label: 'Triângulo', cat: 'triangulos' },
+          { id: 'quadrado', label: 'Quadrado', cat: 'quadrilateros' },
+          { id: 'retangulo', label: 'Retângulo', cat: 'quadrilateros' },
+          { id: 'circulo', label: 'Círculo', cat: 'circulos' },
+          { id: 'trapezio', label: 'Trapézio', cat: 'quadrilateros' }
+        ], esperado: { triangulos: ['triangulo'], quadrilateros: ['quadrado','retangulo','trapezio'], circulos: ['circulo'] }, dica: 'Agrupe por propriedades de lados e ângulos.' },
+        { tipo: 'passos', titulo: 'Viajar de ônibus', instrucao: 'Organize a preparação e o percurso.', passos: [ 'Comprar passagem', 'Arrumar mala', 'Chegar à rodoviária', 'Embarcar', 'Desembarcar' ], esperado: [ 'Comprar passagem', 'Arrumar mala', 'Chegar à rodoviária', 'Embarcar', 'Desembarcar' ], dica: 'Prepare antes de sair.' },
+        { tipo: 'categorias', titulo: 'Tempos verbais', instrucao: 'Classifique as formas verbais.', itens: [
+          { id: 'fui', label: 'fui', cat: 'passado' },
+          { id: 'comi', label: 'comi', cat: 'passado' },
+          { id: 'vou', label: 'vou', cat: 'presente' },
+          { id: 'como', label: 'como', cat: 'presente' },
+          { id: 'irei', label: 'irei', cat: 'futuro' },
+          { id: 'comerei', label: 'comerei', cat: 'futuro' }
+        ], esperado: { passado: ['fui','comi'], presente: ['vou','como'], futuro: ['irei','comerei'] }, dica: 'Tempo verbal indica quando a ação ocorre.' },
+        { tipo: 'passos', titulo: 'Configurar Wi‑Fi', instrucao: 'Ordene as etapas de configuração.', passos: [ 'Ligar roteador', 'Acessar painel', 'Configurar senha', 'Salvar alterações', 'Conectar-se' ], esperado: [ 'Ligar roteador', 'Acessar painel', 'Configurar senha', 'Salvar alterações', 'Conectar-se' ], dica: 'Ajuste antes de conectar.' },
+        { tipo: 'categorias', titulo: 'Tarefas da casa', instrucao: 'Classifique as tarefas por cômodo.', itens: [
+          { id: 'lavar_pratos', label: 'Lavar pratos', cat: 'cozinha' },
+          { id: 'guardar_louca', label: 'Guardar louça', cat: 'cozinha' },
+          { id: 'varrer_sala', label: 'Varrer sala', cat: 'sala' },
+          { id: 'passar_pano', label: 'Passar pano', cat: 'sala' },
+          { id: 'limpar_box', label: 'Limpar box', cat: 'banheiro' },
+          { id: 'higienizar_vaso', label: 'Higienizar vaso', cat: 'banheiro' }
+        ], esperado: { cozinha: ['lavar_pratos','guardar_louca'], sala: ['varrer_sala','passar_pano'], banheiro: ['limpar_box','higienizar_vaso'] }, dica: 'Separe por local de execução.' }
       ];
 
       let step = 1;
