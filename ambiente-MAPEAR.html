@@ -215,7 +215,227 @@
   </main>
 
   <footer class="app-footer">
-    <small>Metodologia MAPEAR — Aprendizagem ativa, reflexiva e colaborativa.</small>
+    <small><!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MAPEAR — Pensamento Computacional com Consciência</title>
+  <link rel="icon" type="image/png" href="./MAPEARFavicon.png">
+  <link rel="stylesheet" href="./styles.css">
+  <style>
+    .toc { display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
+    .figure { display:flex; justify-content:center; margin:10px 0; }
+    .figure img { max-width:320px; width:100%; height:auto; border-radius:10px; border:1px solid rgba(148,163,184,0.25); box-shadow:0 6px 18px rgba(0,0,0,0.25); }
+    .iframe-wrap { position:relative; width:100%; padding-top:62.5%; border-radius:14px; overflow:hidden; border:1px solid rgba(148,163,184,0.15); box-shadow:0 10px 30px rgba(0,0,0,0.25); background: #0b1220; }
+    .iframe-wrap iframe { position:absolute; inset:0; width:100%; height:100%; border:0; background:#0b1220; }
+    .games-toolbar { display:flex; flex-wrap:wrap; gap:8px; }
+    @media (min-width: 1200px) { .app-container { max-width: 1200px; } }
+    @media (min-width: 1440px) { .app-container { max-width: 1320px; } }
+    @media (min-width: 1680px) { .app-container { max-width: 1440px; } }
+  </style>
+  <script>
+    function navegarParaJogo(rotasHash) {
+      const el = document.getElementById('jogos-frame');
+      if (!el) return;
+      el.src = `mapear.html${rotasHash}`;
+    }
+    function navegarParaCurso(ancoraHash) {
+      const el = document.getElementById('curso-frame');
+      if (!el) return;
+      const hash = (ancoraHash || '').startsWith('#') ? (ancoraHash || '') : `#${ancoraHash || ''}`;
+      const doc = el.contentDocument || (el.contentWindow && el.contentWindow.document);
+      if (doc) {
+        const id = hash.slice(1);
+        const target = id ? doc.getElementById(id) : null;
+        if (target && target.scrollIntoView) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          return;
+        }
+      }
+      el.src = `cursoMapear.html${hash}`;
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const el = document.getElementById('curso-frame');
+      if (!el) return;
+      fetch('cursoMapear.html', { credentials: 'same-origin' })
+        .then(r => r.ok ? r.text() : Promise.reject(new Error('Falha ao carregar cursoMapear.html')))
+        .then(html => {
+          el.srcdoc = html;
+          setTimeout(() => {
+            const doc = el.contentDocument || (el.contentWindow && el.contentWindow.document);
+            if (!doc) return;
+            const target = doc.getElementById('topo') || doc.body;
+            if (target && target.scrollIntoView) target.scrollIntoView();
+          }, 60);
+        })
+        .catch(() => {
+          // Mantém o src como fallback
+        });
+    });
+  </script>
+  <!--
+    Este documento reaproveita todos os jogos e imagens de mapear.html por meio de um iframe,
+    preservando a lógica e recursos já existentes, e organiza o conteúdo do capítulo solicitado.
+  -->
+  <meta name="description" content="Metodologia MAPEAR — Pensamento Computacional com Consciência: fases, recursos, diferenciais e integração com STEAM, com acesso aos minijogos interativos.">
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand">
+      <span class="brand-title">MAPEAR</span>
+      <span class="brand-subtitle">Pensamento Computacional com Consciência</span>
+    </div>
+    <nav class="main-nav">
+      <a href="#intro">Introdução</a>
+      <a href="#fases">Fases</a>
+      <a href="#recursos">Recursos</a>
+      <a href="#diferenciais">Diferenciais</a>
+      <a href="#steam">Integração STEAM</a>
+      <a href="#resultados">Resultados</a>
+      <a href="#finais">Considerações</a>
+      <a href="#curso">Curso</a>
+      <a href="#jogos">Jogos</a>
+    </nav>
+  </header>
+
+  <main class="app-container">
+    <section id="intro" class="card">
+      <h1>MAPEAR — Pensamento Computacional com Consciência</h1>
+      <p>
+        A MAPEAR constitui uma proposta inovadora voltada ao ensino básico e à formação inicial e continuada de professores, com foco no desenvolvimento de competências associadas ao Pensamento Computacional (PC). Inspirada na metáfora de “traçar caminhos”, a metodologia busca mapear o processo de aprendizagem por meio de ciclos de experimentação, investigação e reflexão, sempre conectados à prática pedagógica real.
+      </p>
+      <p>
+        A metodologia integra princípios do Construcionismo e do Construtivismo, valorizando a construção ativa do conhecimento e a criação de artefatos tangíveis como estratégia de aprendizagem. Com isso, promove experiências pedagógicas significativas, estimulando a autonomia, a colaboração e a reflexão crítica.
+      </p>
+      <div class="figure">
+        <img alt="Logo da Metodologia MAPEAR" src="https://carolsoko.github.io/imagens/MAPEAR.png">
+      </div>
+      <div class="toc">
+        <a class="button" href="#fases">Fases</a>
+        <a class="button" href="#recursos">Recursos</a>
+        <a class="button" href="#diferenciais">Diferenciais</a>
+        <a class="button" href="#steam">STEAM</a>
+        <a class="button" href="#resultados">Resultados</a>
+        <a class="button" href="#finais">Considerações</a>
+        <a class="button" href="#curso">Curso</a>
+        <a class="button" href="#jogos">Ir aos Jogos</a>
+      </div>
+    </section>
+
+    <section id="fases" class="card" style="margin-top:16px;">
+      <h2>Fases da Metodologia MAPEAR</h2>
+      <p class="muted">A metodologia organiza-se em seis fases formativas interdependentes, concebidas para criar um ciclo contínuo de aprendizagem:</p>
+      <ol>
+        <li><h3><strong>Motivar:</strong></h3> Estimula o engajamento dos estudantes por meio de desafios contextualizados, conectando problemas reais ao uso do PC. Objetiva despertar curiosidade, interesse e protagonismo.</li>
+        <li><h3><strong>Apresentar Conceitos:</strong></h3> Introdução estruturada e acessível dos fundamentos do PC — decomposição, abstração, reconhecimento de padrões e raciocínio algorítmico — utilizando exemplos concretos e experiências pedagógicas alinhadas à realidade dos participantes.</li>
+        <li><h3><strong>Planejar e Prototipar:</strong></h3> Professores e alunos planejam atividades e projetos, criando mapas conceituais, fluxogramas e pseudocódigos. A fase integra soluções digitais e desplugadas, considerando o contexto e a disponibilidade de recursos.</li>
+        <li><h3><strong>Experimentar com Tecnologia:</strong></h3> Aplicação prática dos conceitos utilizando plataformas como Scratch, Code.org, Tinkercad Circuits, MakeCode, simuladores Arduino, kits físicos (Arduino, Micro:bit, LEGO Education) e os Jogos MAPEAR. Essa etapa valoriza aprendizagem ativa por meio da experimentação e construção colaborativa.</li>
+        <li><h3><strong>Analisar e Ajustar:</strong></h3> Reflexão crítica sobre os resultados obtidos. Identificação de acertos, desafios e estratégias de melhoria. Incentiva postura investigativa e capacidade de adaptação frente a problemas pedagógicos.</li>
+        <li><h3><strong>Refletir e Compartilhar:</strong></h3> Sistematização das aprendizagens e socialização das experiências com a comunidade escolar, via feiras, portfólios digitais ou plataformas colaborativas. Promove redes de colaboração e consolida práticas inovadoras.</li>
+      </ol>
+    </section>
+
+    <section id="recursos" class="card" style="margin-top:16px;">
+      <h2>Recursos Integrados da Metodologia MAPEAR</h2>
+      <h3>Jogos MAPEAR</h3>
+      <ul>
+        <li>Feedback em tempo real para aprendizagem autônoma;</li>
+        <li>Monitoramento do progresso através de relatórios;</li>
+        <li>Atividades que integram conceitos de PC e RE de forma lúdica.</li>
+      </ul>
+      <h3>Curso de Formação MAPEAR (presencial, híbrido ou EAD)</h3>
+      <ul>
+        <li>Fundamentos do PC na educação básica;</li>
+        <li>Ferramentas digitais e atividades desplugadas;</li>
+        <li>Planejamento de projetos escolares com mediação ativa e RE;</li>
+        <li>Estratégias de avaliação de competências computacionais;</li>
+        <li>Compartilhamento de experiências e banco de práticas.</li>
+      </ul>
+      <h3>Kits Didáticos e Atividades Guiadas</h3>
+      <ul>
+        <li>Kits analógicos: baralhos de lógica, mapas de algoritmos, desafios em papel;</li>
+        <li>Kits digitais: simuladores, aplicativos e plataformas de programação;</li>
+        <li>Roteiros passo a passo para projetos interdisciplinares;</li>
+        <li>Rubricas de avaliação para monitoramento de competências.</li>
+      </ul>
+    </section>
+
+    <section id="diferenciais" class="card" style="margin-top:16px;">
+      <h2>Diferenciais da Metodologia MAPEAR</h2>
+      <ul>
+        <li><strong>Flexibilidade:</strong> aplicável com ou sem tecnologia digital;</li>
+        <li><strong>Interdisciplinaridade:</strong> integração do PC com conteúdos curriculares e problemas reais;</li>
+        <li><strong>Protagonismo:</strong> incentiva autoria e autonomia de alunos e professores;</li>
+        <li><strong>Ciclos ativos</strong> de teoria, prática e reflexão;</li>
+        <li><strong>Formação contínua</strong> com trilhas gamificadas e microcertificações;</li>
+        <li><strong>Colaboração:</strong> socialização de práticas e fortalecimento de redes escolares.</li>
+      </ul>
+    </section>
+
+    <section id="steam" class="card" style="margin-top:16px;">
+      <h2>Integração com Metodologias Ativas e STEAM</h2>
+      <ul>
+        <li>Solução de problemas reais e contextualizados;</li>
+        <li>Aprendizagem interdisciplinar, conectando Ciências, Tecnologia, Engenharia, Artes e Matemática;</li>
+        <li>Desenvolvimento de habilidades cognitivas e socioemocionais;</li>
+        <li>Engajamento ativo e construção colaborativa do conhecimento.</li>
+      </ul>
+    </section>
+
+    <section id="resultados" class="card" style="margin-top:16px;">
+      <h2>Resultados Esperados</h2>
+      <ol>
+        <li><strong>Aprendizagem dos Estudantes:</strong> Engajamento, pensamento crítico, criatividade e competências em PC.</li>
+        <li><strong>Competências Docentes:</strong> Habilidade de integrar PC e RE em práticas pedagógicas alinhadas à BNCC.</li>
+        <li><strong>Repertório Pedagógico:</strong> Diversificação de estratégias de ensino com metodologias ativas, gamificação e recursos tecnológicos.</li>
+        <li><strong>Comunidade de Prática:</strong> Criação de redes colaborativas de alunos e professores que compartilham experiências e aprimoram continuamente a metodologia.</li>
+      </ol>
+    </section>
+
+    <section id="finais" class="card" style="margin-top:16px;">
+      <h2>Considerações Finais</h2>
+      <p>
+        A MAPEAR constitui uma abordagem inovadora que conecta teoria, prática, reflexão e tecnologia, favorecendo o desenvolvimento de competências de PC, habilidades socioemocionais e aprendizagem significativa. Sua flexibilidade, interdisciplinaridade e foco em protagonismo tornam-na adequada para contextos diversos, desde escolas básicas até programas de formação docente.
+      </p>
+      <p>
+        O ensino com a Metodologia MAPEAR permite aos alunos e professores explorar o Pensamento Computacional de forma ativa e reflexiva, promovendo a construção de conhecimento contextualizado, colaborativo e interdisciplinar, essencial para a educação do século XXI.
+      </p>
+    </section>
+
+    <section id="curso" class="card" style="margin-top:16px;">
+      <h2>Curso de Formação MAPEAR</h2>
+      <p class="muted">Use os botões para navegar pelas seções.</p>
+      <div class="games-toolbar" style="margin-bottom:10px;">
+        <button class="button" onclick="navegarParaCurso('#topo')">Topo</button>
+        <button class="button" onclick="navegarParaCurso('#programa')">Programa</button>
+        <button class="button" onclick="navegarParaCurso('#mod1')">Módulo 1</button>
+        <button class="button" onclick="navegarParaCurso('#mod2')">Módulo 2</button>
+        <button class="button" onclick="navegarParaCurso('#mod3')">Módulo 3</button>
+        <button class="button" onclick="navegarParaCurso('#mod4')">Módulo 4</button>
+        <button class="button" onclick="navegarParaCurso('#mod5')">Módulo 5</button>
+        <button class="button" onclick="navegarParaCurso('#cronograma')">Cronograma</button>
+        <button class="button" onclick="navegarParaCurso('#faq')">FAQ</button>
+        <a class="button secondary" href="cursoMapear.html" target="_blank" rel="noopener">Abrir em nova aba</a>
+      </div>
+      <div class="iframe-wrap">
+        <iframe id="curso-frame" title="Curso MAPEAR" src="cursoMapear.html#topo"></iframe>
+      </div>
+    </section>
+
+    <section id="jogos" class="card" style="margin-top:16px;">
+      <div class="iframe-wrap">
+        <iframe id="jogos-frame" title="Jogos MAPEAR" src="mapear.html#/"></iframe>
+      </div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <small>MAPEAR — Metodologia Ativa de Pensamento Computacional com Ênfase em Aprendizagem Reflexiva • © 2025</small>
+  </footer>
+</body>
+</html></small>
   </footer>
 </body>
 </html>
