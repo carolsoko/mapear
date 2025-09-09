@@ -20,6 +20,9 @@ body {
   color: var(--text);
 }
 
+html { scroll-behavior: smooth; }
+section, .card { scroll-margin-top: 88px; }
+
 .app-header {
   display: flex;
   flex-wrap: wrap;
