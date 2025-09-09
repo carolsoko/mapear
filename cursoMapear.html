@@ -475,7 +475,7 @@
     <section id="baralho" aria-labelledby="baralho-t">
       <h2 id="baralho-t">Baralho Pedagógico</h2>
       <div class="cta-row">
-        <a class="btn secondary" href="./Baralho.pdf" target="_blank" rel="noopener" download="Baralho.pdf">Baixar baralho (PDF para impressão)</a>
+        <button class="btn secondary" id="btn-gerar-baralho" type="button">Gerar baralho (PDF)</button>
       </div>
       <div class="deck" role="list">
         <div class="card-deck" role="listitem">
@@ -965,5 +965,77 @@
       MAPEAR — Metodologia Ativa de Pensamento Computacional com Ênfase em Aprendizagem Reflexiva • © 2025
     </footer>
   </div>
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+  <script>
+    (function() {
+      const button = document.getElementById('btn-gerar-baralho');
+      if (!button) return;
+      button.addEventListener('click', async () => {
+        if (!window.html2canvas || !window.jspdf) {
+          alert('Bibliotecas para gerar PDF não carregaram. Verifique sua conexão.');
+          return;
+        }
+        const originalText = button.textContent;
+        button.disabled = true;
+        button.textContent = 'Gerando PDF…';
+
+        try {
+          const cards = Array.from(document.querySelectorAll('.deck .card-deck'));
+          const { jsPDF } = window.jspdf;
+          const pdf = new jsPDF({ orientation: 'portrait', unit: 'pt', format: 'a4' });
+          const pageWidth = pdf.internal.pageSize.getWidth();
+          const pageHeight = pdf.internal.pageSize.getHeight();
+          const margin = 36; // 0.5in
+
+          for (let i = 0; i < cards.length; i++) {
+            const card = cards[i];
+
+            // Clona o card para renderização isolada
+            const clone = card.cloneNode(true);
+            const wrapper = document.createElement('div');
+            wrapper.style.position = 'fixed';
+            wrapper.style.left = '-10000px';
+            wrapper.style.top = '0';
+            wrapper.style.padding = '24px';
+            wrapper.style.background = '#0b1020'; // fundo preto garantido
+            wrapper.style.color = getComputedStyle(document.documentElement).getPropertyValue('--text') || '#eaf0ff';
+            wrapper.style.borderRadius = '14px';
+            wrapper.appendChild(clone);
+            document.body.appendChild(wrapper);
+
+            // Renderiza o elemento em alta resolução
+            const canvas = await html2canvas(wrapper, {
+              backgroundColor: '#0b1020',
+              scale: Math.min(3, window.devicePixelRatio || 2)
+            });
+            const imgData = canvas.toDataURL('image/png');
+            const targetWidth = pageWidth - margin * 2;
+            const targetHeight = (canvas.height * targetWidth) / canvas.width;
+
+            if (i > 0) pdf.addPage();
+
+            // Preenche o fundo da página com preto para manter estética
+            pdf.setFillColor(11, 16, 32); // #0b1020
+            pdf.rect(0, 0, pageWidth, pageHeight, 'F');
+
+            // Centraliza verticalmente
+            const y = Math.max(margin, (pageHeight - targetHeight) / 2);
+            pdf.addImage(imgData, 'PNG', margin, y, targetWidth, targetHeight, undefined, 'FAST');
+
+            document.body.removeChild(wrapper);
+          }
+
+          pdf.save('Baralho_MAPEAR.pdf');
+        } catch (err) {
+          console.error(err);
+          alert('Falha ao gerar o PDF do baralho. Tente novamente.');
+        } finally {
+          button.disabled = false;
+          button.textContent = originalText;
+        }
+      });
+    })();
+  </script>
 </body>
 </html>
