@@ -492,7 +492,7 @@
     <section id="baralho" aria-labelledby="baralho-t">
       <h2 id="baralho-t">Baralho Pedagógico</h2>
       <div class="cta-row">
-        <a class="btn secondary" href="./Baralho.pdf" target="_blank" rel="noopener" download="Baralho.pdf">Baixar baralho (PDF para impressão)</a>
+        <button class="btn secondary" id="download-deck">Baixar baralho (PDF para impressão)</button>
       </div>
       <div class="deck" role="list">
         <div class="card-deck" role="listitem">
@@ -982,5 +982,76 @@
       MAPEAR — Metodologia Ativa de Pensamento Computacional com Ênfase em Aprendizagem Reflexiva • © 2025
     </footer>
   </div>
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js" defer></script>
+  <script defer>
+    (function(){
+      function scaleToFit(pdf, imgData, margin){
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = pdf.internal.pageSize.getHeight();
+        const usableWidth = pdfWidth - margin * 2;
+        const usableHeight = pdfHeight - margin * 2;
+        const props = pdf.getImageProperties(imgData);
+        let w = usableWidth;
+        let h = (props.height * w) / props.width;
+        if (h > usableHeight) {
+          h = usableHeight;
+          w = (props.width * h) / props.height;
+        }
+        const x = (pdfWidth - w) / 2;
+        const y = (pdfHeight - h) / 2;
+        return { x, y, w, h };
+      }
+
+      async function elementToDataUrl(el){
+        const canvas = await html2canvas(el, { backgroundColor: '#ffffff', scale: 2, useCORS: true });
+        return canvas.toDataURL('image/png');
+      }
+
+      async function generateDeckPdf(){
+        const button = document.getElementById('download-deck');
+        if (!button) return;
+        button.disabled = true;
+        const originalText = button.textContent;
+        button.textContent = 'Gerando…';
+        try {
+          const deckCards = Array.from(document.querySelectorAll('#baralho .card-deck'));
+          if (deckCards.length === 0) throw new Error('Nenhuma carta encontrada.');
+
+          const { jsPDF } = window.jspdf || {};
+          if (!jsPDF) throw new Error('Biblioteca jsPDF não carregada.');
+          const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+          const margin = 10;
+
+          for (let i = 0; i < deckCards.length; i++) {
+            const card = deckCards[i];
+            // Garantir que SVGs estejam totalmente renderizados
+            await new Promise(r => requestAnimationFrame(r));
+            const dataUrl = await elementToDataUrl(card);
+            const rect = scaleToFit(pdf, dataUrl, margin);
+            if (i > 0) pdf.addPage();
+            pdf.addImage(dataUrl, 'PNG', rect.x, rect.y, rect.w, rect.h);
+          }
+
+          pdf.save('Baralho_MAPEAR.pdf');
+        } catch (err) {
+          console.error(err);
+          alert('Não foi possível gerar o PDF do baralho. Tente novamente.');
+        } finally {
+          button.disabled = false;
+          button.textContent = originalText;
+        }
+      }
+
+      document.addEventListener('DOMContentLoaded', function(){
+        const button = document.getElementById('download-deck');
+        if (button) {
+          button.addEventListener('click', function(){
+            generateDeckPdf();
+          });
+        }
+      });
+    })();
+  </script>
 </body>
 </html>
