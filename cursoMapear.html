@@ -986,26 +986,31 @@
   <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js" defer></script>
   <script defer>
     (function(){
-      function scaleToFit(pdf, imgData, margin){
-        const pdfWidth = pdf.internal.pageSize.getWidth();
-        const pdfHeight = pdf.internal.pageSize.getHeight();
-        const usableWidth = pdfWidth - margin * 2;
-        const usableHeight = pdfHeight - margin * 2;
+      function fitInsideCell(pdf, imgData, cell){
         const props = pdf.getImageProperties(imgData);
-        let w = usableWidth;
-        let h = (props.height * w) / props.width;
-        if (h > usableHeight) {
-          h = usableHeight;
-          w = (props.width * h) / props.height;
+        const imgW = props.width;
+        const imgH = props.height;
+        let w = cell.w;
+        let h = (imgH * w) / imgW;
+        if (h > cell.h) {
+          h = cell.h;
+          w = (imgW * h) / imgH;
         }
-        const x = (pdfWidth - w) / 2;
-        const y = (pdfHeight - h) / 2;
+        const x = cell.x + (cell.w - w) / 2;
+        const y = cell.y + (cell.h - h) / 2;
         return { x, y, w, h };
       }
 
       async function elementToDataUrl(el){
-        const canvas = await html2canvas(el, { backgroundColor: '#ffffff', scale: 2, useCORS: true });
-        return canvas.toDataURL('image/png');
+        const baseCanvas = await html2canvas(el, { backgroundColor: '#ffffff', scale: 3, useCORS: true, allowTaint: true });
+        // Pós-processamento para escurecer e aumentar contraste/saturação
+        const adjusted = document.createElement('canvas');
+        adjusted.width = baseCanvas.width;
+        adjusted.height = baseCanvas.height;
+        const ctx = adjusted.getContext('2d');
+        ctx.filter = 'contrast(1.3) brightness(0.9) saturate(1.15)';
+        ctx.drawImage(baseCanvas, 0, 0);
+        return adjusted.toDataURL('image/png');
       }
 
       async function generateDeckPdf(){
@@ -1021,15 +1026,28 @@
           const { jsPDF } = window.jspdf || {};
           if (!jsPDF) throw new Error('Biblioteca jsPDF não carregada.');
           const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
-          const margin = 10;
+          const pdfWidth = pdf.internal.pageSize.getWidth();
+          const pdfHeight = pdf.internal.pageSize.getHeight();
+          const margin = 10; // mm
+          const gap = 6; // mm entre células
+          const columns = 2;
+          const rows = 2;
+          const cellW = (pdfWidth - margin * 2 - gap) / columns;
+          const cellH = (pdfHeight - margin * 2 - gap) / rows;
+          const cells = [
+            { x: margin, y: margin, w: cellW, h: cellH },
+            { x: margin + cellW + gap, y: margin, w: cellW, h: cellH },
+            { x: margin, y: margin + cellH + gap, w: cellW, h: cellH },
+            { x: margin + cellW + gap, y: margin + cellH + gap, w: cellW, h: cellH }
+          ];
 
           for (let i = 0; i < deckCards.length; i++) {
+            if (i > 0 && i % 4 === 0) pdf.addPage();
             const card = deckCards[i];
-            // Garantir que SVGs estejam totalmente renderizados
             await new Promise(r => requestAnimationFrame(r));
             const dataUrl = await elementToDataUrl(card);
-            const rect = scaleToFit(pdf, dataUrl, margin);
-            if (i > 0) pdf.addPage();
+            const cell = cells[i % 4];
+            const rect = fitInsideCell(pdf, dataUrl, cell);
             pdf.addImage(dataUrl, 'PNG', rect.x, rect.y, rect.w, rect.h);
           }
 
