@@ -348,9 +348,9 @@
     <div class="divider"></div>
 
     <section id="avaliacao" aria-labelledby="av-t">
-      <h2 id="av-t">Matriz de competências (exemplo) e rubrica</h2>
+      <h2 id="av-t">Matriz de competências (exemplo)</h2>
       <div class="notice">Use e adapte conforme seu contexto. Inclui critérios transversais: colaboração, comunicação, ética digital e acessibilidade.</div>
-      <div class="two">
+      <div class="stack">
         <div class="card">
           <div class="table-wrap">
             <table class="rubric" aria-label="Matriz de competências de PC">
@@ -386,9 +386,44 @@
                 <td>Usa estruturas condicionais/repetição.</td>
                 <td>Refina com testes e depuração.</td>
               </tr>
+              <tr>
+                <td>Generalização</td>
+                <td>Aplica solução apenas no exemplo visto.</td>
+                <td>Adapta regra simples a casos parecidos com apoio.</td>
+                <td>Identifica variáveis e limites; transfere a novos contextos com pequenas adaptações.</td>
+                <td>Formula princípios e modelos reutilizáveis que cobrem variações e exceções.</td>
+              </tr>
+              <tr>
+                <td>Robótica</td>
+                <td>Reconhece sensores/atuadores; monta kit seguindo guia; cumpre regras de segurança.</td>
+                <td>Programa reações simples (if/else) com um sensor/atuador; calibra limiares.</td>
+                <td>Integra múltiplos sensores; usa PWM e funções; depura via monitor serial; melhora chassi.</td>
+                <td>Projeta sistema completo com feedback (PID simples), gestão de energia, testes e documentação.</td>
+              </tr>
             </tbody>
             </table>
           </div>
+        </div>
+        
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <section id="cronograma" aria-labelledby="crono-t">
+      <h2 id="crono-t">Cronograma sugerido (30h)</h2>
+      <div class="two">
+        <div class="card">
+          <ol>
+            <li><strong>Encontro 1 (4h):</strong> Módulo 1.1 e 1.2</li>
+            <li><strong>Encontro 2 (2h):</strong> Módulo 1.3</li>
+            <li><strong>Encontro 3 (4h):</strong> Módulo 2.1</li>
+            <li><strong>Encontro 4 (4h):</strong> Módulo 2.2</li>
+            <li><strong>Encontro 5 (4h):</strong> Módulo 2.3</li>
+            <li><strong>Encontro 6 (4h):</strong> Módulo 3.1 e 3.2</li>
+            <li><strong>Encontro 7 (4h):</strong> Módulo 3.3</li>
+            <li><strong>Encontro 8 (4h):</strong> Módulo 4.1, 4.2 e 4.3 + Showcase (Módulo 5)</li>
+          </ol>
         </div>
         <div class="card">
           <h3>Rubrica para projetos MAPEAR (resumo)</h3>
@@ -402,24 +437,6 @@
             <li><strong>Feedback</strong>: ciclos e critérios transparentes.</li>
           </ul>
         </div>
-      </div>
-    </section>
-
-    <div class="divider"></div>
-
-    <section id="cronograma" aria-labelledby="crono-t">
-      <h2 id="crono-t">Cronograma sugerido (30h)</h2>
-      <div class="card">
-        <ol>
-          <li><strong>Encontro 1 (4h):</strong> Módulo 1.1 e 1.2</li>
-          <li><strong>Encontro 2 (2h):</strong> Módulo 1.3</li>
-          <li><strong>Encontro 3 (4h):</strong> Módulo 2.1</li>
-          <li><strong>Encontro 4 (4h):</strong> Módulo 2.2</li>
-          <li><strong>Encontro 5 (4h):</strong> Módulo 2.3</li>
-          <li><strong>Encontro 6 (4h):</strong> Módulo 3.1 e 3.2</li>
-          <li><strong>Encontro 7 (4h):</strong> Módulo 3.3</li>
-          <li><strong>Encontro 8 (4h):</strong> Módulo 4.1, 4.2 e 4.3 + Showcase (Módulo 5)</li>
-        </ol>
       </div>
       <div class="two" style="margin-top:12px">
         <div class="card">
@@ -475,7 +492,7 @@
     <section id="baralho" aria-labelledby="baralho-t">
       <h2 id="baralho-t">Baralho Pedagógico</h2>
       <div class="cta-row">
-        <a class="btn secondary" href="./Baralho.pdf" target="_blank" rel="noopener" download="Baralho.pdf">Baixar baralho (PDF para impressão)</a>
+        <button class="btn secondary" id="download-deck">Baixar baralho (PDF para impressão)</button>
       </div>
       <div class="deck" role="list">
         <div class="card-deck" role="listitem">
@@ -965,5 +982,94 @@
       MAPEAR — Metodologia Ativa de Pensamento Computacional com Ênfase em Aprendizagem Reflexiva • © 2025
     </footer>
   </div>
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js" defer></script>
+  <script defer>
+    (function(){
+      function fitInsideCell(pdf, imgData, cell){
+        const props = pdf.getImageProperties(imgData);
+        const imgW = props.width;
+        const imgH = props.height;
+        let w = cell.w;
+        let h = (imgH * w) / imgW;
+        if (h > cell.h) {
+          h = cell.h;
+          w = (imgW * h) / imgH;
+        }
+        const x = cell.x + (cell.w - w) / 2;
+        const y = cell.y + (cell.h - h) / 2;
+        return { x, y, w, h };
+      }
+
+      async function elementToDataUrl(el){
+        const baseCanvas = await html2canvas(el, { backgroundColor: '#ffffff', scale: 3, useCORS: true, allowTaint: true });
+        // Pós-processamento para escurecer e aumentar contraste/saturação
+        const adjusted = document.createElement('canvas');
+        adjusted.width = baseCanvas.width;
+        adjusted.height = baseCanvas.height;
+        const ctx = adjusted.getContext('2d');
+        ctx.filter = 'contrast(1.3) brightness(0.9) saturate(1.15)';
+        ctx.drawImage(baseCanvas, 0, 0);
+        return adjusted.toDataURL('image/png');
+      }
+
+      async function generateDeckPdf(){
+        const button = document.getElementById('download-deck');
+        if (!button) return;
+        button.disabled = true;
+        const originalText = button.textContent;
+        button.textContent = 'Gerando…';
+        try {
+          const deckCards = Array.from(document.querySelectorAll('#baralho .card-deck'));
+          if (deckCards.length === 0) throw new Error('Nenhuma carta encontrada.');
+
+          const { jsPDF } = window.jspdf || {};
+          if (!jsPDF) throw new Error('Biblioteca jsPDF não carregada.');
+          const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+          const pdfWidth = pdf.internal.pageSize.getWidth();
+          const pdfHeight = pdf.internal.pageSize.getHeight();
+          const margin = 10; // mm
+          const gap = 6; // mm entre células
+          const columns = 2;
+          const rows = 2;
+          const cellW = (pdfWidth - margin * 2 - gap) / columns;
+          const cellH = (pdfHeight - margin * 2 - gap) / rows;
+          const cells = [
+            { x: margin, y: margin, w: cellW, h: cellH },
+            { x: margin + cellW + gap, y: margin, w: cellW, h: cellH },
+            { x: margin, y: margin + cellH + gap, w: cellW, h: cellH },
+            { x: margin + cellW + gap, y: margin + cellH + gap, w: cellW, h: cellH }
+          ];
+
+          for (let i = 0; i < deckCards.length; i++) {
+            if (i > 0 && i % 4 === 0) pdf.addPage();
+            const card = deckCards[i];
+            await new Promise(r => requestAnimationFrame(r));
+            const dataUrl = await elementToDataUrl(card);
+            const cell = cells[i % 4];
+            const rect = fitInsideCell(pdf, dataUrl, cell);
+            pdf.addImage(dataUrl, 'PNG', rect.x, rect.y, rect.w, rect.h);
+          }
+
+          pdf.save('Baralho_MAPEAR.pdf');
+        } catch (err) {
+          console.error(err);
+          alert('Não foi possível gerar o PDF do baralho. Tente novamente.');
+        } finally {
+          button.disabled = false;
+          button.textContent = originalText;
+        }
+      }
+
+      document.addEventListener('DOMContentLoaded', function(){
+        const button = document.getElementById('download-deck');
+        if (button) {
+          button.addEventListener('click', function(){
+            generateDeckPdf();
+          });
+        }
+      });
+    })();
+  </script>
 </body>
 </html>
