@@ -1040,6 +1040,8 @@
             { x: margin, y: margin + cellH + gap, w: cellW, h: cellH },
             { x: margin + cellW + gap, y: margin + cellH + gap, w: cellW, h: cellH }
           ];
+          const headerText = 'BARALHO PEDAGÓGICO MAPEAR';
+          const headerH = 10; // espaço reservado no topo da carta (mm)
 
           for (let i = 0; i < deckCards.length; i++) {
             if (i > 0 && i % 4 === 0) pdf.addPage();
@@ -1049,7 +1051,12 @@
             const cell = cells[i % 4];
             pdf.setFillColor(11, 16, 32);
             pdf.rect(cell.x, cell.y, cell.w, cell.h, 'F');
-            const rect = fitInsideCell(pdf, dataUrl, cell);
+            pdf.setTextColor(255, 255, 255);
+            pdf.setFont('helvetica', 'bold');
+            pdf.setFontSize(10);
+            pdf.text(headerText, cell.x + (cell.w / 2), cell.y + 6, { align: 'center' });
+            const imageCell = { x: cell.x, y: cell.y + headerH, w: cell.w, h: cell.h - headerH };
+            const rect = fitInsideCell(pdf, dataUrl, imageCell);
             pdf.addImage(dataUrl, 'PNG', rect.x, rect.y, rect.w, rect.h);
           }
 
