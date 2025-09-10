@@ -1002,15 +1002,15 @@
       }
 
       async function elementToDataUrl(el){
-        const baseCanvas = await html2canvas(el, { backgroundColor: '#ffffff', scale: 3, useCORS: true, allowTaint: true });
-        // Pós-processamento para escurecer e aumentar contraste/saturação
-        const adjusted = document.createElement('canvas');
-        adjusted.width = baseCanvas.width;
-        adjusted.height = baseCanvas.height;
-        const ctx = adjusted.getContext('2d');
-        ctx.filter = 'contrast(1.3) brightness(0.9) saturate(1.15)';
-        ctx.drawImage(baseCanvas, 0, 0);
-        return adjusted.toDataURL('image/png');
+        const rootStyles = getComputedStyle(document.documentElement);
+        const bgVar = (rootStyles.getPropertyValue('--bg') || '#0b1020').trim() || '#0b1020';
+        const baseCanvas = await html2canvas(el, {
+          backgroundColor: bgVar,
+          scale: 3,
+          useCORS: true,
+          allowTaint: true
+        });
+        return baseCanvas.toDataURL('image/png');
       }
 
       async function generateDeckPdf(){
@@ -1040,6 +1040,8 @@
             { x: margin, y: margin + cellH + gap, w: cellW, h: cellH },
             { x: margin + cellW + gap, y: margin + cellH + gap, w: cellW, h: cellH }
           ];
+          const headerText = 'BARALHO PEDAGÓGICO MAPEAR';
+          const headerH = 10; // espaço reservado no topo da carta (mm)
 
           for (let i = 0; i < deckCards.length; i++) {
             if (i > 0 && i % 4 === 0) pdf.addPage();
@@ -1047,7 +1049,14 @@
             await new Promise(r => requestAnimationFrame(r));
             const dataUrl = await elementToDataUrl(card);
             const cell = cells[i % 4];
-            const rect = fitInsideCell(pdf, dataUrl, cell);
+            pdf.setFillColor(11, 16, 32);
+            pdf.rect(cell.x, cell.y, cell.w, cell.h, 'F');
+            pdf.setTextColor(255, 255, 255);
+            pdf.setFont('helvetica', 'bold');
+            pdf.setFontSize(10);
+            pdf.text(headerText, cell.x + (cell.w / 2), cell.y + 6, { align: 'center' });
+            const imageCell = { x: cell.x, y: cell.y + headerH, w: cell.w, h: cell.h - headerH };
+            const rect = fitInsideCell(pdf, dataUrl, imageCell);
             pdf.addImage(dataUrl, 'PNG', rect.x, rect.y, rect.w, rect.h);
           }
 
