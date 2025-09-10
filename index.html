@@ -26,16 +26,27 @@
     function navegarParaCurso(ancoraHash) {
       const el = document.getElementById('curso-frame');
       if (!el) return;
-      const hash = (ancoraHash || '').startsWith('#') ? (ancoraHash || '') : `#${ancoraHash || ''}`;
-      const doc = el.contentDocument || (el.contentWindow && el.contentWindow.document);
-      if (doc) {
-        const id = hash.slice(1);
-        const target = id ? doc.getElementById(id) : null;
-        if (target && target.scrollIntoView) {
-          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          return;
+      const raw = (ancoraHash || '').toString();
+      const hash = raw.startsWith('#') ? raw : `#${raw}`;
+      let doc = null;
+      try {
+        doc = el.contentDocument || (el.contentWindow && el.contentWindow.document) || null;
+      } catch (e) {
+        doc = null;
+      }
+      const id = hash.slice(1);
+      if (doc && id) {
+        try {
+          const target = doc.getElementById(id);
+          if (target && typeof target.scrollIntoView === 'function') {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            return;
+          }
+        } catch (e) {
+          // fallback via src below
         }
       }
+      // Fallback: força navegação por src (funciona em file:// e contextos cross-origin)
       el.src = `cursoMapear.html${hash}`;
     }
 
