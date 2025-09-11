@@ -1107,14 +1107,14 @@ label { display: block; font-size: 13px; color: var(--muted); margin: 6px 0; }
     function renderDecomposicao() {
       const phases = [
         { tipo: 'categorias', titulo: 'Arrumar o quarto', instrucao: 'Separe itens por categoria: escola vs outros.', itens: [
-          { id: 'livros', label: 'Livros', cat: 'estudo' },
+          { id: 'livro', label: 'Livros', cat: 'estudo' },
           { id: 'caderno', label: 'Cadernos', cat: 'estudo' },
           { id: 'caneta', label: 'Caneta', cat: 'estudo' },
-          { id: 'lapis', label: 'Lápis', cat: 'estudo' },
+          { id: 'lapis', label: 'Lapis', cat: 'estudo' },
           { id: 'bola', label: 'Bola', cat: 'outros' },
           { id: 'urso', label: 'Ursinho', cat: 'outros' }
-        ], esperado: { estudo: ['livros','caderno','lapis','caneta'], outros: ['bola','urso'] }, dica: 'Pense em grupos naturais: materiais escolares vs. lazer.' },
-        { tipo: 'passos', titulo: 'Preparar o lanche', instrucao: 'Ordene as etapas.', passos: [ 'Lavar fruta', 'Cortar', 'Guardar', 'Levar' ], esperado: [ 'Lavar fruta', 'Cortar', 'Guardar', 'Levar' ], dica: 'Sequencie do preparo ao transporte.' },
+        ], esperado: { estudo: ['livro','caderno','lapis','caneta'], outros: ['bola','urso'] }, dica: 'Pense em grupos naturais: materiais escolares vs. lazer.' },
+        { tipo: 'passos', titulo: 'Preparar o lanche', instrucao: 'Ordene as etapas.', passos: [ 'Lavar fruta', 'Cortar', 'Guardar na lancheira', 'Levar','Escolher fruta' ], esperado: [ 'Escolher fruta', 'Lavar fruta', 'Cortar', 'Guardar na lancheira', 'Levar' ], dica: 'Sequencie do preparo ao transporte.' },
         { tipo: 'passos', titulo: 'Tomar banho', instrucao: 'Clique na ordem correta.', passos: [ 'Ligar chuveiro', 'Molhar', 'Ensaboar', 'Enxaguar', 'Secar' ], esperado: [ 'Ligar chuveiro', 'Molhar', 'Ensaboar', 'Enxaguar', 'Secar' ], dica: 'Do início ao fim, sem pular etapas.' },
         { tipo: 'categorias', titulo: 'Organizar o quarto', instrucao: 'Separe por áreas.', itens: [
           { id: 'travesseiro', label: 'Travesseiro', cat: 'cama' },
