@@ -1,0 +1,72 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id               String              @id @default(cuid())
+  email            String              @unique
+  name             String?
+  avatarUrl        String?
+  createdAt        DateTime            @default(now())
+  updatedAt        DateTime            @updatedAt
+
+  providers        Provider[]
+  gameSessions     GameSession[]
+  courseProgresses CourseProgress[]
+}
+
+model Provider {
+  id           String @id @default(cuid())
+  providerType String
+  providerId   String
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  @@unique([providerType, providerId])
+  @@index([userId])
+}
+
+model GameSession {
+  id               String   @id @default(cuid())
+  userId           String
+  user             User     @relation(fields: [userId], references: [id])
+
+  gameKey          String
+  correctCount     Int
+  totalCount       Int
+  timeSpentSeconds Int       @default(0)
+  startedAt        DateTime  @default(now())
+  completedAt      DateTime?
+
+  @@index([userId, gameKey])
+}
+
+model CourseProgress {
+  id               String   @id @default(cuid())
+  userId           String
+  user             User     @relation(fields: [userId], references: [id])
+
+  courseKey        String
+  moduleKey        String
+  score            Int       @default(0)
+  timeSpentSeconds Int       @default(0)
+  attempts         Int       @default(0)
+  completed        Boolean   @default(false)
+  updatedAt        DateTime  @updatedAt
+
+  @@unique([userId, courseKey, moduleKey])
+  @@index([userId, courseKey])
+}
