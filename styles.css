@@ -30,13 +30,14 @@ section, .card { scroll-margin-top: 88px; }
   justify-content: space-between;
   gap: 12px;
   padding: 16px 20px;
-  background: linear-gradient(180deg, rgba(17,24,39,0.9), rgba(17,24,39,0.6));
+  background: linear-gradient(180deg, rgba(17,24,39,0.98), rgba(17,24,39,0.9));
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   backdrop-filter: blur(10px);
-  z-index: 1000;
+  z-index: 9999;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.35);
 }
 
 .brand { display: flex; flex-direction: column; }
