@@ -41,7 +41,9 @@
       background: linear-gradient(135deg, rgba(124,156,255,.14), rgba(34,197,94,.10));
       padding: 36px;
       box-shadow: var(--shadow-2);
-      position: relative;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
       overflow: hidden;
       isolation: isolate;
     }
@@ -91,6 +93,12 @@
     .table-wrap { overflow: auto; border-radius: 12px }
     .rubric { min-width: 720px }
     .footer { color: var(--muted); font-size: 14px; text-align: center; padding: 24px 12px }
+    /* Navegação rápida */
+    .quick-nav { display:flex; gap:8px; flex-wrap:wrap; overflow:auto; padding: 8px 0 }
+    .quick-nav a { text-decoration:none }
+    .quick-nav .btn { white-space: nowrap }
+    /* Compensa cabeçalho sticky nas âncoras */
+    section[id], article[id], h2[id], h3[id] { scroll-margin-top: 90px }
     .nav {
       position: sticky; top: 12px; background: rgba(12,18,40,.7); backdrop-filter: blur(6px);
       border:1px solid rgba(255,255,255,.08); border-radius: 14px; padding: 12px; box-shadow: var(--shadow-1)
@@ -136,6 +144,23 @@
     </header>
 
     <div class="divider"></div>
+
+    <div class="card" role="navigation" aria-label="Navegação rápida">
+      <div class="quick-nav">
+        <a class="btn ghost" href="#topo">Topo</a>
+        <a class="btn ghost" href="#programa">Programa</a>
+        <a class="btn ghost" href="#mod1">Módulo 1</a>
+        <a class="btn ghost" href="#mod2">Módulo 2</a>
+        <a class="btn ghost" href="#mod3">Módulo 3</a>
+        <a class="btn ghost" href="#mod4">Módulo 4</a>
+        <a class="btn ghost" href="#mod5">Módulo 5</a>
+        <a class="btn ghost" href="#avaliacao">Matriz</a>
+        <a class="btn ghost" href="#cronograma">Cronograma</a>
+        <a class="btn ghost" href="#recursos">Recursos</a>
+        <a class="btn ghost" href="#baralho">Baralho</a>
+        <a class="btn ghost" href="#faq">FAQ</a>
+      </div>
+    </div>
 
     <section class="grid" aria-label="Visão geral">
       <div class="grid cols-3">
