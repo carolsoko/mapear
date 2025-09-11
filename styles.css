@@ -31,7 +31,7 @@ section, .card { scroll-margin-top: 88px; }
   gap: 12px;
   padding: 16px 20px;
   background: linear-gradient(180deg, rgba(17,24,39,0.98), rgba(17,24,39,0.9));
-  position: fixed;
+  position: sticky;
   top: 0;
   left: 0;
   right: 0;
@@ -60,7 +60,7 @@ section, .card { scroll-margin-top: 88px; }
 .app-container {
   max-width: 1000px;
   margin: 24px auto;
-  padding: 88px 16px 80px;
+  padding: 24px 16px 80px;
 }
 
 .card {
@@ -97,6 +97,35 @@ p { color: var(--text); line-height: 1.6; }
 .button:hover { background: rgba(34,197,94,0.25); }
 .button.secondary { background: rgba(96,165,250,0.12); border-color: rgba(96,165,250,0.4); }
 .button.danger { background: rgba(239,68,68,0.12); border-color: rgba(239,68,68,0.4); }
+
+/* Botões de destaque (CTA) para Curso e Jogos */
+.button.cta {
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: 0;
+  color: #ffffff;
+  box-shadow: 0 10px 24px rgba(0,0,0,0.35);
+  transition: transform 0.15s ease, box-shadow 0.2s ease, filter 0.2s ease;
+}
+.button.cta:hover { transform: translateY(-1px); filter: brightness(1.06); }
+.button.cta:active { transform: translateY(0); filter: brightness(0.98); }
+.button.cta:focus-visible { outline: 3px solid rgba(96,165,250,0.45); outline-offset: 2px; }
+
+/* Variante primária: Jogos (verde) */
+.button.cta.primary {
+  background: linear-gradient(135deg, #16a34a, #22c55e 50%, #10b981);
+  box-shadow: 0 8px 24px rgba(34,197,94,0.35), inset 0 0 0 1px rgba(255,255,255,0.12);
+}
+.button.cta.primary:hover { box-shadow: 0 10px 30px rgba(34,197,94,0.45), inset 0 0 0 1px rgba(255,255,255,0.16); }
+
+/* Variante secundária: Curso (azul/roxo) */
+.button.cta.secondary {
+  background: linear-gradient(135deg, #2563eb, #60a5fa 50%, #7c3aed);
+  box-shadow: 0 8px 24px rgba(96,165,250,0.35), inset 0 0 0 1px rgba(255,255,255,0.12);
+}
+.button.cta.secondary:hover { box-shadow: 0 10px 30px rgba(96,165,250,0.45), inset 0 0 0 1px rgba(255,255,255,0.16); }
 
 .input, textarea, select {
   width: 100%;
