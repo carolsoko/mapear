@@ -21,6 +21,7 @@
       --shadow-1: 0 10px 30px rgba(0,0,0,.25);
       --shadow-2: 0 12px 50px rgba(124,156,255,.2);
       --code-bg: #0f1530;
+      --hero-offset: 220px;
     }
     * { box-sizing: border-box }
     html, body { height: 100% }
@@ -35,15 +36,17 @@
     }
     a { color: var(--brand); text-decoration: none }
     a:hover { text-decoration: underline }
-    .wrap { max-width: 1100px; margin: 0 auto; padding: 28px }
+    .wrap { max-width: 1100px; margin: 0 auto; padding: calc(28px + var(--hero-offset)) 28px 28px }
     header.hero {
       border-radius: var(--radius-xl);
       background: linear-gradient(135deg, rgba(124,156,255,.14), rgba(34,197,94,.10));
       padding: 36px;
       box-shadow: var(--shadow-2);
-      position: sticky;
+      position: fixed;
       top: 0;
-      z-index: 1000;
+      left: 0;
+      right: 0;
+      z-index: 9999;
       overflow: hidden;
       isolation: isolate;
     }
@@ -97,10 +100,10 @@
     .quick-nav { display:flex; gap:8px; flex-wrap:wrap; overflow:auto; padding: 8px 0 }
     .quick-nav a { text-decoration:none }
     .quick-nav .btn { white-space: nowrap }
-    /* Compensa cabeçalho sticky nas âncoras */
-    section[id], article[id], h2[id], h3[id] { scroll-margin-top: 90px }
+    /* Compensa cabeçalho fixo nas âncoras */
+    section[id], article[id], h2[id], h3[id] { scroll-margin-top: var(--hero-offset) }
     .nav {
-      position: sticky; top: 12px; background: rgba(12,18,40,.7); backdrop-filter: blur(6px);
+      position: sticky; top: calc(var(--hero-offset) + 12px); background: rgba(12,18,40,.7); backdrop-filter: blur(6px);
       border:1px solid rgba(255,255,255,.08); border-radius: 14px; padding: 12px; box-shadow: var(--shadow-1)
     }
     .nav a { display:block; padding: 8px 10px; border-radius: 10px }

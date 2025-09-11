@@ -43,7 +43,6 @@ section, .card { scroll-margin-top: 88px; }
 .brand { display: flex; flex-direction: column; }
 .brand-title { font-weight: 800; letter-spacing: 0.5px; color: var(--primary); }
 .brand-subtitle { font-size: 12px; color: var(--muted); }
-.
 .brand-row { display: flex; align-items: center; gap: 8px; }
 .brand-icon { width: 28px; height: 28px; border-radius: 6px; }
 
