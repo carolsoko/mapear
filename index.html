@@ -10,65 +10,12 @@
     .toc { display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
     .figure { display:flex; justify-content:center; margin:10px 0; }
     .figure img { max-width:320px; width:100%; height:auto; border-radius:10px; border:1px solid rgba(148,163,184,0.25); box-shadow:0 6px 18px rgba(0,0,0,0.25); }
-    .iframe-wrap { position:relative; width:100%; padding-top:62.5%; border-radius:14px; overflow:hidden; border:1px solid rgba(148,163,184,0.15); box-shadow:0 10px 30px rgba(0,0,0,0.25); background: #0b1220; }
-    .iframe-wrap iframe { position:absolute; inset:0; width:100%; height:100%; border:0; background:#0b1220; }
-    .games-toolbar { display:flex; flex-wrap:wrap; gap:8px; }
+    /* estilos de iframe removidos */
     @media (min-width: 1200px) { .app-container { max-width: 1200px; } }
     @media (min-width: 1440px) { .app-container { max-width: 1320px; } }
     @media (min-width: 1680px) { .app-container { max-width: 1440px; } }
   </style>
-  <script>
-    function navegarParaJogo(rotasHash) {
-      const el = document.getElementById('jogos-frame');
-      if (!el) return;
-      el.src = `mapear.html${rotasHash}`;
-    }
-    function navegarParaCurso(ancoraHash) {
-      const el = document.getElementById('curso-frame');
-      if (!el) return;
-      const raw = (ancoraHash || '').toString();
-      const hash = raw.startsWith('#') ? raw : `#${raw}`;
-      let doc = null;
-      try {
-        doc = el.contentDocument || (el.contentWindow && el.contentWindow.document) || null;
-      } catch (e) {
-        doc = null;
-      }
-      const id = hash.slice(1);
-      if (doc && id) {
-        try {
-          const target = doc.getElementById(id);
-          if (target && typeof target.scrollIntoView === 'function') {
-            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            return;
-          }
-        } catch (e) {
-          // fallback via src below
-        }
-      }
-      // Fallback: força navegação por src (funciona em file:// e contextos cross-origin)
-      el.src = `cursoMapear.html${hash}`;
-    }
-
-    document.addEventListener('DOMContentLoaded', function() {
-      const el = document.getElementById('curso-frame');
-      if (!el) return;
-      fetch('cursoMapear.html', { credentials: 'same-origin' })
-        .then(r => r.ok ? r.text() : Promise.reject(new Error('Falha ao carregar cursoMapear.html')))
-        .then(html => {
-          el.srcdoc = html;
-          setTimeout(() => {
-            const doc = el.contentDocument || (el.contentWindow && el.contentWindow.document);
-            if (!doc) return;
-            const target = doc.getElementById('topo') || doc.body;
-            if (target && target.scrollIntoView) target.scrollIntoView();
-          }, 60);
-        })
-        .catch(() => {
-          // Mantém o src como fallback
-        });
-    });
-  </script>
+  <!-- scripts de incorporação removidos -->
   <meta name="description" content="Arcabouço Pedagógico MAPEAR — Pensamento Computacional com Consciência: fases, recursos, diferenciais e integração com STEAM, com acesso aos minijogos interativos.">
 </head>
 <body>
@@ -187,29 +134,14 @@
 
     <section id="curso" class="card" style="margin-top:16px;">
       <h2>Curso de Formação MAPEAR</h2>
-      <p class="muted">Use os botões para navegar pelas seções.</p>
-      <div class="games-toolbar" style="margin-bottom:10px;">
-        <button class="button" onclick="navegarParaCurso('#topo')">Topo</button>
-        <button class="button" onclick="navegarParaCurso('#programa')">Programa</button>
-        <button class="button" onclick="navegarParaCurso('#mod1')">Módulo 1</button>
-        <button class="button" onclick="navegarParaCurso('#mod2')">Módulo 2</button>
-        <button class="button" onclick="navegarParaCurso('#mod3')">Módulo 3</button>
-        <button class="button" onclick="navegarParaCurso('#mod4')">Módulo 4</button>
-        <button class="button" onclick="navegarParaCurso('#mod5')">Módulo 5</button>
-        <button class="button" onclick="navegarParaCurso('#baralho')">Baralho</button>
-        <button class="button" onclick="navegarParaCurso('#cronograma')">Cronograma</button>
-        <button class="button" onclick="navegarParaCurso('#faq')">FAQ</button>
-        <a class="button secondary" href="cursoMapear.html" target="_blank" rel="noopener">Abrir em nova aba</a>
-      </div>
-      <div class="iframe-wrap">
-        <iframe id="curso-frame" title="Curso MAPEAR" src="cursoMapear.html#topo"></iframe>
-      </div>
+      <p class="muted">Abra o curso em uma nova aba do navegador.</p>
+      <a class="button secondary" href="cursoMapear.html" target="_blank" rel="noopener">Abrir Curso MAPEAR em nova aba</a>
     </section>
 
     <section id="jogos" class="card" style="margin-top:16px;">
-      <div class="iframe-wrap">
-        <iframe id="jogos-frame" title="Jogos MAPEAR" src="mapear.html#/"></iframe>
-      </div>
+      <h2>Jogos MAPEAR</h2>
+      <p class="muted">Abra os jogos em uma nova aba do navegador.</p>
+      <a class="button" href="mapear.html#/" target="_blank" rel="noopener">Abrir Jogos MAPEAR em nova aba</a>
     </section>
   </main>
 

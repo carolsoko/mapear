@@ -30,16 +30,21 @@ section, .card { scroll-margin-top: 88px; }
   justify-content: space-between;
   gap: 12px;
   padding: 16px 20px;
-  background: linear-gradient(180deg, rgba(17,24,39,0.9), rgba(17,24,39,0.6));
-  position: sticky;
+  background: linear-gradient(180deg, rgba(17,24,39,0.98), rgba(17,24,39,0.9));
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   backdrop-filter: blur(10px);
-  z-index: 10;
+  z-index: 9999;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.35);
 }
 
 .brand { display: flex; flex-direction: column; }
 .brand-title { font-weight: 800; letter-spacing: 0.5px; color: var(--primary); }
 .brand-subtitle { font-size: 12px; color: var(--muted); }
+.brand-row { display: flex; align-items: center; gap: 8px; }
+.brand-icon { width: 28px; height: 28px; border-radius: 6px; }
 
 .main-nav { display: flex; flex-wrap: wrap; gap: 10px; }
 .main-nav a {
@@ -55,7 +60,7 @@ section, .card { scroll-margin-top: 88px; }
 .app-container {
   max-width: 1000px;
   margin: 24px auto;
-  padding: 0 16px 80px;
+  padding: 88px 16px 80px;
 }
 
 .card {
