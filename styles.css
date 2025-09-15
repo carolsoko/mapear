@@ -244,3 +244,11 @@ label { display: block; font-size: 13px; color: var(--muted); margin: 6px 0; }
 .list li { padding: 10px 12px; border-bottom: 1px dashed rgba(148,163,184,0.15); }
 
 .app-footer { position: fixed; bottom: 0; left: 0; right: 0; padding: 10px 16px; background: linear-gradient(180deg, rgba(17,24,39,0.0), rgba(17,24,39,0.8)); border-top: 1px solid rgba(148,163,184,0.15); text-align: center; color: var(--muted); }
+
+/* Rodapé padrão para todas as páginas */
+.footer {
+  color: var(--muted);
+  font-size: 14px;
+  text-align: center;
+  padding: 24px 12px;
+}
