@@ -33,13 +33,13 @@ section, .card { scroll-margin-top: var(--hero-offset); }
   justify-content: space-between;
   gap: 12px;
   padding: 16px 20px;
-  background: linear-gradient(135deg, rgba(124,156,255,.14), rgba(34,197,94,.10));
+  background: #111827;
   position: sticky;
   top: 0;
   left: 0;
   right: 0;
   z-index: 9999;
-  backdrop-filter: blur(6px);
+  backdrop-filter: none;
   border-bottom: 1px solid rgba(255,255,255,.08);
   box-shadow: 0 12px 30px rgba(0,0,0,0.25);
 }
