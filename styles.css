@@ -27,6 +27,9 @@ body {
 html { scroll-behavior: smooth; }
 section, .card { scroll-margin-top: var(--hero-offset); }
 
+/* Imagens responsivas (evita que logos/figuras estourem a largura no mobile) */
+img { max-width: 100%; height: auto; }
+
 .app-header {
   display: flex;
   flex-wrap: wrap;
@@ -64,10 +67,8 @@ section, .card { scroll-margin-top: var(--hero-offset); }
 
 /* Submenu fixo logo abaixo do header principal */
 .sub-nav {
-  position: fixed;
+  position: sticky;
   top: 68px;
-  left: 0;
-  right: 0;
   z-index: 9998;
   display: flex;
   flex-wrap: nowrap;
@@ -78,6 +79,7 @@ section, .card { scroll-margin-top: var(--hero-offset); }
   box-shadow: 0 8px 20px rgba(0,0,0,0.25);
   overflow-x: auto;
 }
+@media (max-width: 700px) { .sub-nav { top: 124px; } }
 .sub-nav a {
   text-decoration: none;
   color: var(--text);
