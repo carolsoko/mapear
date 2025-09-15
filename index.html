@@ -14,6 +14,17 @@
     @media (min-width: 1200px) { .app-container { max-width: 1200px; } }
     @media (min-width: 1440px) { .app-container { max-width: 1320px; } }
     @media (min-width: 1680px) { .app-container { max-width: 1440px; } }
+    /* Gradientes para os botões do menu na página inicial */
+    .main-nav .btn.ghost {
+      background: linear-gradient(135deg, #2563eb, #60a5fa 50%, #7c3aed);
+      color: #ffffff;
+      border: 0;
+      box-shadow: 0 8px 24px rgba(96,165,250,0.35), inset 0 0 0 1px rgba(255,255,255,0.12);
+      transition: transform 0.15s ease, box-shadow 0.2s ease, filter 0.2s ease;
+    }
+    .main-nav .btn.ghost:hover { transform: translateY(-1px); filter: brightness(1.06); }
+    .main-nav .btn.ghost:active { transform: translateY(0); filter: brightness(0.98); }
+    .main-nav .btn.ghost:focus-visible { outline: 3px solid rgba(96,165,250,0.45); outline-offset: 2px; }
   </style>
   <!-- scripts de incorporação removidos -->
   <meta name="description" content="Arcabouço Pedagógico MAPEAR — Pensamento Computacional com Consciência: fases, recursos, diferenciais e integração com STEAM, com acesso aos minijogos interativos.">
