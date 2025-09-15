@@ -21,7 +21,7 @@ body {
               radial-gradient(800px 600px at 10% 110%, rgba(34,197,94,.12), transparent 60%),
               var(--bg);
   color: var(--text);
-  padding-top: 124px;
+  padding-top: var(--app-header-height, 124px);
 }
 
 html { scroll-behavior: smooth; }
@@ -68,7 +68,7 @@ img { max-width: 100%; height: auto; }
 /* Submenu fixo logo abaixo do header principal */
 .sub-nav {
   position: sticky;
-  top: 68px;
+  top: var(--app-header-height, 124px);
   z-index: 9998;
   display: flex;
   flex-wrap: nowrap;
@@ -79,7 +79,6 @@ img { max-width: 100%; height: auto; }
   box-shadow: 0 8px 20px rgba(0,0,0,0.25);
   overflow-x: auto;
 }
-@media (max-width: 700px) { .sub-nav { top: 124px; } }
 .sub-nav a {
   text-decoration: none;
   color: var(--text);

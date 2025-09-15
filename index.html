@@ -26,7 +26,7 @@
       <span class="brand-subtitle">Pensamento Computacional com Consciência</span>
     </div>
     <nav class="main-nav">
-      <a class="btn ghost" href="#intro">Introdução</a>
+      <a class="btn ghost" href="#intro">Início</a>
       <a class="btn ghost" href="conteudo.html">Conteúdo</a>
       <a class="btn ghost" href="cursoMapear.html">Curso</a>
       <a class="btn ghost" href="mapear.html#/">Jogos</a>
@@ -50,5 +50,22 @@
   <footer class="footer">
       Arcabouço Pedagógico MAPEAR — Aprendizagem ativa, reflexiva e colaborativa
     </footer>
+  <script>
+    (function(){
+      function setHeaderHeightVar(){
+        var header = document.querySelector('.app-header');
+        var h = header ? Math.ceil(header.getBoundingClientRect().height) : 124;
+        document.documentElement.style.setProperty('--app-header-height', h + 'px');
+      }
+      if (document.readyState !== 'loading') setHeaderHeightVar();
+      else document.addEventListener('DOMContentLoaded', setHeaderHeightVar);
+      window.addEventListener('resize', setHeaderHeightVar, { passive: true });
+      var header = document.querySelector('.app-header');
+      if (header && 'ResizeObserver' in window) {
+        var ro = new ResizeObserver(setHeaderHeightVar);
+        ro.observe(header);
+      }
+    })();
+  </script>
 </body>
 </html>

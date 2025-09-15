@@ -2396,5 +2396,22 @@ label { display: block; font-size: 13px; color: var(--muted); margin: 6px 0; }
   <footer class="footer">
       Arcabouço Pedagógico MAPEAR — Aprendizagem ativa, reflexiva e colaborativa
     </footer>
+  <script>
+    (function(){
+      function setHeaderHeightVar(){
+        var header = document.querySelector('.app-header');
+        var h = header ? Math.ceil(header.getBoundingClientRect().height) : 124;
+        document.documentElement.style.setProperty('--app-header-height', h + 'px');
+      }
+      if (document.readyState !== 'loading') setHeaderHeightVar();
+      else document.addEventListener('DOMContentLoaded', setHeaderHeightVar);
+      window.addEventListener('resize', setHeaderHeightVar, { passive: true });
+      var header = document.querySelector('.app-header');
+      if (header && 'ResizeObserver' in window) {
+        var ro = new ResizeObserver(setHeaderHeightVar);
+        ro.observe(header);
+      }
+    })();
+  </script>
 </body>
 </html>

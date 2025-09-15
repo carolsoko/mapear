@@ -1011,6 +1011,23 @@
   </div>
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js" defer></script>
+  <script>
+    (function(){
+      function setHeaderHeightVar(){
+        var header = document.querySelector('.app-header');
+        var h = header ? Math.ceil(header.getBoundingClientRect().height) : 124;
+        document.documentElement.style.setProperty('--app-header-height', h + 'px');
+      }
+      if (document.readyState !== 'loading') setHeaderHeightVar();
+      else document.addEventListener('DOMContentLoaded', setHeaderHeightVar);
+      window.addEventListener('resize', setHeaderHeightVar, { passive: true });
+      var header = document.querySelector('.app-header');
+      if (header && 'ResizeObserver' in window) {
+        var ro = new ResizeObserver(setHeaderHeightVar);
+        ro.observe(header);
+      }
+    })();
+  </script>
   <script defer>
     (function(){
       function fitInsideCell(pdf, imgData, cell){
