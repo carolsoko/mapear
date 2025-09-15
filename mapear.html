@@ -39,7 +39,8 @@ body {
   background: #111827;
 }
 
-.brand { display: flex; align-items: center; gap: 10px; }
+.brand { display: flex; flex-direction: column; }
+.brand-row { display: flex; align-items: center; gap: 10px; }
 .brand-text { display: flex; flex-direction: column; }
 .brand-icon { width: 32px; height: 32px; border-radius: 8px; }
 .brand-title { font-weight: 800; letter-spacing: 0.5px; color: var(--primary); }
@@ -135,7 +136,7 @@ label { display: block; font-size: 13px; color: var(--muted); margin: 6px 0; }
         <img class="brand-icon" src="/MAPEARFavicon.png" alt="Logo MAPEAR">
         <span class="brand-title">Arcabouço Pedagógico MAPEAR</span>
       </div>
-      <span class="brand-subtitle">Pensamento Computacional com Consciência</span>
+      <span class="brand-subtitle">Pensamento computacional com consciência</span>
     </div>
     <nav class="main-nav">
       <a class="btn ghost" href="index.html#intro">Início</a>
