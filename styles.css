@@ -33,13 +33,13 @@ section, .card { scroll-margin-top: var(--hero-offset); }
   justify-content: space-between;
   gap: 12px;
   padding: 16px 20px;
-  background: linear-gradient(135deg, rgba(124,156,255,.14), rgba(34,197,94,.10));
+  background: #111827;
   position: sticky;
   top: 0;
   left: 0;
   right: 0;
   z-index: 9999;
-  backdrop-filter: blur(6px);
+  backdrop-filter: none;
   border-bottom: 1px solid rgba(255,255,255,.08);
   box-shadow: 0 12px 30px rgba(0,0,0,0.25);
 }
@@ -91,6 +91,25 @@ section, .card { scroll-margin-top: var(--hero-offset); }
   padding: 24px 16px 80px;
 }
 
+.hero-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 16px;
+}
+.hero-actions .button.cta {
+  width: 100%;
+  justify-content: center;
+  padding: 18px 20px;
+  font-size: 18px;
+  line-height: 1.2;
+  border-radius: 16px;
+  box-shadow: 0 14px 36px rgba(0,0,0,0.45);
+}
+@media (max-width: 700px) {
+  .hero-actions { grid-template-columns: 1fr; }
+}
+
 .card {
   background: linear-gradient(180deg, rgba(16,24,39,0.8), rgba(16,24,39,0.6));
   border: 1px solid rgba(148,163,184,0.15);
@@ -128,13 +147,13 @@ p { color: var(--text); line-height: 1.6; }
 
 /* Botões de destaque (CTA) para Curso e Jogos */
 .button.cta {
-  font-weight: 700;
-  letter-spacing: 0.2px;
-  padding: 12px 16px;
-  border-radius: 12px;
+  font-weight: 800;
+  letter-spacing: 0.3px;
+  padding: 16px 18px;
+  border-radius: 14px;
   border: 0;
   color: #ffffff;
-  box-shadow: 0 10px 24px rgba(0,0,0,0.35);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.4);
   transition: transform 0.15s ease, box-shadow 0.2s ease, filter 0.2s ease;
 }
 .button.cta:hover { transform: translateY(-1px); filter: brightness(1.06); }
