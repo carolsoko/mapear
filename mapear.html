@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Jogos MAPEAR — Pensamento Computacional</title>
   <link rel="icon" type="image/png" href="./MAPEARFavicon.png">
+  <link rel="stylesheet" href="./styles.css">
   <style>
 :root {
   --bg: #0f172a;
@@ -32,14 +33,10 @@ body {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
   gap: 12px;
   padding: 16px 20px;
-  background: linear-gradient(180deg, rgba(17,24,39,0.9), rgba(17,24,39,0.6));
-  position: sticky;
-  top: 0;
-  backdrop-filter: blur(10px);
-  z-index: 10;
+  background: #111827;
 }
 
 .brand { display: flex; align-items: center; gap: 10px; }
@@ -134,24 +131,28 @@ label { display: block; font-size: 13px; color: var(--muted); margin: 6px 0; }
 <body>
   <header class="app-header">
     <div class="brand">
-      <img class="brand-icon" alt="MAPEAR" src="./MAPEARFavicon.png">
-      <div class="brand-text">
-        <span class="brand-title">Jogos MAPEAR</span>
-        <span class="brand-subtitle">Pensamento Computacional</span>
-      </div>
+      <span class="brand-title">Arcabouço Pedagógico MAPEAR</span>
+      <span class="brand-subtitle">Pensamento Computacional com Consciência</span>
     </div>
     <nav class="main-nav">
-      <a href="#/" data-route>Início</a>
-      <a href="#/padroes" data-route>Detective de Padrões</a>
-      <a href="#/abstracao" data-route>Abstração</a>
-      <a href="#/decomposicao" data-route>Decomposição</a>
-      <a href="#/algoritmo" data-route>Algoritmos</a>
-      <a href="#/generalizacao" data-route>Generalize+</a>
-      <a href="#/robotica" data-route>Robótica</a>
-      <a href="#/relatorios" data-route>Relatórios</a>
-      <a href="#/ajustes" data-route>Ajustes</a>
+      <a class="btn ghost" href="./FichasRubricasMAPEAR.pdf" download>Baixar Rubricas (PDF)</a>
+      <a class="btn ghost" href="index.html#intro">Início</a>
+      <a class="btn ghost" href="conteudo.html">Conteúdo</a>
+      <a class="btn ghost" href="cursoMapear.html">Curso</a>
+      <a class="btn ghost" href="mapear.html#/">Jogos</a>
     </nav>
   </header>
+  <nav class="sub-nav" aria-label="Navegação dos jogos">
+    <a href="#/" data-route>Início</a>
+    <a href="#/padroes" data-route>Detective de Padrões</a>
+    <a href="#/abstracao" data-route>Abstração</a>
+    <a href="#/decomposicao" data-route>Decomposição</a>
+    <a href="#/algoritmo" data-route>Algoritmos</a>
+    <a href="#/generalizacao" data-route>Generalize+</a>
+    <a href="#/robotica" data-route>Robótica</a>
+    <a href="#/relatorios" data-route>Relatórios</a>
+    <a href="#/ajustes" data-route>Ajustes</a>
+  </nav>
 
   <main id="app" class="app-container" aria-live="polite"></main>
 
@@ -336,7 +337,7 @@ label { display: block; font-size: 13px; color: var(--muted); margin: 6px 0; }
   <script>
   (function(){
     const appEl = document.getElementById('app');
-    const navLinks = Array.from(document.querySelectorAll('nav.main-nav a[data-route]'));
+    const navLinks = Array.from(document.querySelectorAll('nav.sub-nav a[data-route]'));
 
     function setActiveNav(hash) {
       navLinks.forEach(a => {

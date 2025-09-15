@@ -6,6 +6,7 @@
   <title>Curso de Formação MAPEAR</title>
   <meta name="description" content="Curso de Formação MAPEAR: Fundamentos de Pensamento Computacional, ferramentas digitais e atividades desplugadas, planejamento com mediação ativa e reflexão estruturada, avaliação de competências e compartilhamento de práticas." />
   <link rel="icon" type="image/png" href="/MAPEARFavicon.png">
+  <link rel="stylesheet" href="./styles.css">
   <style>
     :root {
       --bg: #0b1020;
@@ -37,20 +38,8 @@
     }
     a { color: var(--brand); text-decoration: none }
     a:hover { text-decoration: underline }
-    .wrap { max-width: 1100px; margin: 0 auto; padding: calc(28px + var(--hero-offset)) 28px 28px }
-    header.hero {
-      border-radius: var(--radius-xl);
-      background: #111827;
-      padding: 36px;
-      box-shadow: var(--shadow-2);
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 9999;
-      overflow: hidden;
-      isolation: isolate;
-    }
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 28px 28px 28px }
+    header.hero { display: none }
     .badge { display: inline-block; padding: 6px 12px; border-radius: 999px; background: rgba(124,156,255,.18); color: #dbe5ff; font-weight: 600; letter-spacing: .3px }
     h1 { font-size: clamp(28px, 4vw, 44px); margin: 10px 0 8px }
     .sub { color: var(--muted); max-width: 70ch }
@@ -136,28 +125,35 @@
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <header class="hero" id="topo" aria-labelledby="titulo">
-      <nav class="quick-nav" role="navigation" aria-label="Navegação rápida">
-        <a class="btn ghost" href="#topo">Topo</a>
-        <a class="btn ghost" href="index.html#intro">Início</a>
-        <a class="btn ghost" href="conteudo.html">Conteúdo</a>
-        <a class="btn ghost" href="mapear.html#/">Jogos</a>
-        <a class="btn ghost" href="#programa">Programa</a>
-        <a class="btn ghost" href="#mod1">Módulo 1</a>
-        <a class="btn ghost" href="#mod2">Módulo 2</a>
-        <a class="btn ghost" href="#mod3">Módulo 3</a>
-        <a class="btn ghost" href="#mod4">Módulo 4</a>
-        <a class="btn ghost" href="#mod5">Módulo 5</a>
-        <a class="btn ghost" href="#avaliacao">Matriz</a>
-        <a class="btn ghost" href="#cronograma">Cronograma</a>
-        <a class="btn ghost" href="#recursos">Recursos</a>
-        <a class="btn ghost" href="#baralho">Baralho</a>
-        <a class="btn ghost" href="#faq">FAQ</a>
-      </nav>
-    </header>
+  <header class="app-header">
+    <div class="brand">
+      <span class="brand-title">Arcabouço Pedagógico MAPEAR</span>
+      <span class="brand-subtitle">Pensamento Computacional com Consciência</span>
+    </div>
+    <nav class="main-nav">
+      <a class="btn ghost" href="./FichasRubricasMAPEAR.pdf" download>Baixar Rubricas (PDF)</a>
+      <a class="btn ghost" href="index.html#intro">Início</a>
+      <a class="btn ghost" href="conteudo.html">Conteúdo</a>
+      <a class="btn ghost" href="cursoMapear.html">Curso</a>
+      <a class="btn ghost" href="mapear.html#/">Jogos</a>
+    </nav>
+  </header>
+  <nav class="sub-nav" aria-label="Navegação do curso">
+    <a href="#topo">Topo</a>
+    <a href="#programa">Programa</a>
+    <a href="#mod1">Módulo 1</a>
+    <a href="#mod2">Módulo 2</a>
+    <a href="#mod3">Módulo 3</a>
+    <a href="#mod4">Módulo 4</a>
+    <a href="#mod5">Módulo 5</a>
+    <a href="#avaliacao">Matriz</a>
+    <a href="#cronograma">Cronograma</a>
+    <a href="#recursos">Recursos</a>
+    <a href="#baralho">Baralho</a>
+    <a href="#faq">FAQ</a>
+  </nav>
 
-    <div class="divider"></div>
+  <div class="wrap">
 
     <section class="card" aria-labelledby="titulo">
       <span class="badge">Formação Docente • MAPEAR</span>
