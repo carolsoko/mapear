@@ -209,6 +209,13 @@ p { color: var(--text); line-height: 1.6; }
 }
 .button.cta.tertiary:hover { box-shadow: 0 10px 30px rgba(245,158,11,0.45), inset 0 0 0 1px rgba(255,255,255,0.16); }
 
+/* Variante roxa: Baixar Artefatos (roxo) */
+.button.cta.purple {
+  background: linear-gradient(135deg, #6d28d9, #7c3aed 50%, #a78bfa);
+  box-shadow: 0 8px 24px rgba(167,139,250,0.35), inset 0 0 0 1px rgba(255,255,255,0.12);
+}
+.button.cta.purple:hover { box-shadow: 0 10px 30px rgba(167,139,250,0.45), inset 0 0 0 1px rgba(255,255,255,0.16); }
+
 .input, textarea, select {
   width: 100%;
   padding: 10px 12px;
