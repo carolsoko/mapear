@@ -7,6 +7,9 @@
   <meta name="description" content="Curso de Formação MAPEAR: Fundamentos de Pensamento Computacional, ferramentas digitais e atividades desplugadas, planejamento com mediação ativa e reflexão estruturada, avaliação de competências e compartilhamento de práticas." />
   <link rel="icon" type="image/png" href="/MAPEARFavicon.png">
   <link rel="stylesheet" href="./styles.css">
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="./config.js" defer></script>
+  <script src="./auth.js" defer></script>
   <style>
     :root {
       --bg: #0b1020;
@@ -153,6 +156,13 @@
     <a href="#baralho">Baralho</a>
     <a href="#faq">FAQ</a>
   </nav>
+  <script>
+    document.addEventListener('DOMContentLoaded', function(){
+      if (window.MAPEAR_AUTH && !window.MAPEAR_AUTH.isLoggedIn()){
+        window.MAPEAR_AUTH.requireLogin();
+      }
+    });
+  </script>
 
   <div class="wrap">
 
